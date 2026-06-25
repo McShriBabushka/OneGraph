@@ -1,0 +1,5 @@
+{
+  "projectRoot": "/Users/reeshav.mohapatra/OneGraph",
+  "sourceFilePaths": [".gitignore", ".understand-anything/.understandignore", "extractors/CallExtractor.js", "extractors/ClassExtractor.js", "extractors/ExportExtractor.js", "extractors/FunctionExtractor.js", "extractors/IExtractor.js", "extractors/ImportExtractor.js", "index.js", "output/IFactWriter.js", "output/JsonFactWriter.js", "output/micro-lap-facts.json", "package.json", "parser/IParser.js", "parser/ParserRegistry.js", "parser/TreeSitterParser.js", "pipeline/AnalysisPipeline.js", "utils/FileDiscovery.js", "walker/IASTWalker.js", "walker/TreeSitterWalker.js"],
+  "gitCommitHash": "N/A"
+}

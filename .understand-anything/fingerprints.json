@@ -1,0 +1,442 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "N/A",
+  "generatedAt": "2026-06-23T11:01:06.347Z",
+  "files": {
+    ".gitignore": {
+      "filePath": ".gitignore",
+      "contentHash": "368a7b721eab24e660a0f5fec675b6c2f5446bdfb5c8b40c8b3163a52a81d72f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4,
+      "hasStructuralAnalysis": false
+    },
+    ".understand-anything/.understandignore": {
+      "filePath": ".understand-anything/.understandignore",
+      "contentHash": "405633db8b23b92e67b59ebf2778d4920f66f0267bb8bc70ff4366a87d4c4afd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 32,
+      "hasStructuralAnalysis": false
+    },
+    "extractors/CallExtractor.js": {
+      "filePath": "extractors/CallExtractor.js",
+      "contentHash": "14921c350e9a2bd2ff11076737de7da8a5a4b21e4d6ede928df8902031982760",
+      "functions": [],
+      "classes": [
+        {
+          "name": "CallExtractor",
+          "methods": [
+            "getNodeTypes",
+            "getFactKey",
+            "extract",
+            "_fromCallExpression",
+            "_fromNewExpression",
+            "_fromJsxElement",
+            "_fromJsxSelfClosing",
+            "_jsxFact"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 148
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 196,
+      "hasStructuralAnalysis": true
+    },
+    "extractors/ClassExtractor.js": {
+      "filePath": "extractors/ClassExtractor.js",
+      "contentHash": "e1e28ebecc9efeafc3fc1135fe1b845b460ffc07f659ecd823f0b9ac6ed0d32b",
+      "functions": [
+        {
+          "name": "resolveVariableName",
+          "params": [
+            "node"
+          ],
+          "exported": false,
+          "lineCount": 10
+        }
+      ],
+      "classes": [
+        {
+          "name": "ClassExtractor",
+          "methods": [
+            "getNodeTypes",
+            "getFactKey",
+            "extract"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 77
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 140,
+      "hasStructuralAnalysis": true
+    },
+    "extractors/ExportExtractor.js": {
+      "filePath": "extractors/ExportExtractor.js",
+      "contentHash": "1705c78c4a72bd5758ad142827c13de39fb2c545c73198476f164864c49cf7cc",
+      "functions": [
+        {
+          "name": "stripQuotes",
+          "params": [
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [
+        {
+          "name": "ExportExtractor",
+          "methods": [
+            "getNodeTypes",
+            "getFactKey",
+            "extract"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 84
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 148,
+      "hasStructuralAnalysis": true
+    },
+    "extractors/FunctionExtractor.js": {
+      "filePath": "extractors/FunctionExtractor.js",
+      "contentHash": "6c2be869732ed29c7c08ee1c08c3a3af49a40a3d34b146ad09f5aa35d0112652",
+      "functions": [
+        {
+          "name": "resolveVariableName",
+          "params": [
+            "node"
+          ],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "resolveParentClassName",
+          "params": [
+            "node"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "isComponent",
+          "params": [
+            "name"
+          ],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [
+        {
+          "name": "FunctionExtractor",
+          "methods": [
+            "getNodeTypes",
+            "getFactKey",
+            "extract",
+            "_fromDeclaration",
+            "_fromParentVariable",
+            "_fromMethodDef"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 100
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 203,
+      "hasStructuralAnalysis": true
+    },
+    "extractors/IExtractor.js": {
+      "filePath": "extractors/IExtractor.js",
+      "contentHash": "916e796852dd24cfee8c69521f1f149b8142c456576e3f7987555748409d909d",
+      "functions": [],
+      "classes": [
+        {
+          "name": "IExtractor",
+          "methods": [
+            "getNodeTypes",
+            "extract",
+            "getFactKey"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 42
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 74,
+      "hasStructuralAnalysis": true
+    },
+    "extractors/ImportExtractor.js": {
+      "filePath": "extractors/ImportExtractor.js",
+      "contentHash": "cb245401d1b6b83fc1c354a4a5c3bc03eed15a3f93b430b6ef4c4a5c35ad44af",
+      "functions": [
+        {
+          "name": "stripQuotes",
+          "params": [
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [
+        {
+          "name": "ImportExtractor",
+          "methods": [
+            "getNodeTypes",
+            "getFactKey",
+            "extract",
+            "_collectSpecifiers"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 84
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 153,
+      "hasStructuralAnalysis": true
+    },
+    "index.js": {
+      "filePath": "index.js",
+      "contentHash": "4f075d854658815325aea2a3c9c52210019f96b41936b4a13495a543f28acc94",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 91,
+      "hasStructuralAnalysis": true
+    },
+    "output/IFactWriter.js": {
+      "filePath": "output/IFactWriter.js",
+      "contentHash": "6e566728c870d481bab4e6da6d91c73ebf4e3ac43d9be98e6b5b8e8034762598",
+      "functions": [],
+      "classes": [
+        {
+          "name": "IFactWriter",
+          "methods": [
+            "write"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 15
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 32,
+      "hasStructuralAnalysis": true
+    },
+    "output/JsonFactWriter.js": {
+      "filePath": "output/JsonFactWriter.js",
+      "contentHash": "7e406e3d35ba1b814a5105947b7be6935fb983e1776263f2aed94b032412e64d",
+      "functions": [],
+      "classes": [
+        {
+          "name": "JsonFactWriter",
+          "methods": [
+            "constructor",
+            "write"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 20
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 52,
+      "hasStructuralAnalysis": true
+    },
+    "output/micro-lap-facts.json": {
+      "filePath": "output/micro-lap-facts.json",
+      "contentHash": "4a9429e86b8529d6ae966167ba9af01818466554f1ccff4da098fe8755ea856a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 16541,
+      "hasStructuralAnalysis": true
+    },
+    "package.json": {
+      "filePath": "package.json",
+      "contentHash": "af2ce748c75749caebf0e040d0079e8685c57987f00e0f6752fe6704a011f4e3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    "parser/IParser.js": {
+      "filePath": "parser/IParser.js",
+      "contentHash": "18e6de63cb3f0c515c3ec32ff21cd036b2d0acd389a7605d57fc4bdee0b5b1c2",
+      "functions": [],
+      "classes": [
+        {
+          "name": "IParser",
+          "methods": [
+            "parse",
+            "getSupportedExtensions"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 22
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 54,
+      "hasStructuralAnalysis": true
+    },
+    "parser/ParserRegistry.js": {
+      "filePath": "parser/ParserRegistry.js",
+      "contentHash": "410192759d32e247669c88c18912a8c6f30e2030798d26eb7ffa27ee405505d3",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ParserRegistry",
+          "methods": [
+            "constructor",
+            "register",
+            "getParserFor",
+            "registeredExtensions"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 40
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 62,
+      "hasStructuralAnalysis": true
+    },
+    "parser/TreeSitterParser.js": {
+      "filePath": "parser/TreeSitterParser.js",
+      "contentHash": "bb8acca7f491fa090a324f6dd7be9b8b2f30e0d0cda457a3969cfcd0a62e6553",
+      "functions": [],
+      "classes": [
+        {
+          "name": "TreeSitterParser",
+          "methods": [
+            "constructor",
+            "getSupportedExtensions",
+            "parse"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 29
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 61,
+      "hasStructuralAnalysis": true
+    },
+    "pipeline/AnalysisPipeline.js": {
+      "filePath": "pipeline/AnalysisPipeline.js",
+      "contentHash": "72a1889ebe869090f65113aaa4cc9b999836b1ca1dce05f31167822fa65fec79",
+      "functions": [],
+      "classes": [
+        {
+          "name": "AnalysisPipeline",
+          "methods": [
+            "constructor",
+            "run"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 63
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 88,
+      "hasStructuralAnalysis": true
+    },
+    "utils/FileDiscovery.js": {
+      "filePath": "utils/FileDiscovery.js",
+      "contentHash": "ba53e6b4fe64acb531831b30b3b1738e1f46dc8e87c137bb0d4363cd29a3dc66",
+      "functions": [],
+      "classes": [
+        {
+          "name": "FileDiscovery",
+          "methods": [
+            "constructor",
+            "discover",
+            "_walk"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 51
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 75,
+      "hasStructuralAnalysis": true
+    },
+    "walker/IASTWalker.js": {
+      "filePath": "walker/IASTWalker.js",
+      "contentHash": "526ef9dec004e4f6dcd8c0b95980b3faa7e42f735b429fa8adf93795334d90d4",
+      "functions": [],
+      "classes": [
+        {
+          "name": "IASTWalker",
+          "methods": [
+            "walk"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 15
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 50,
+      "hasStructuralAnalysis": true
+    },
+    "walker/TreeSitterWalker.js": {
+      "filePath": "walker/TreeSitterWalker.js",
+      "contentHash": "46a379c7b64d23df0d5ccb578dec27a1ee263d6042afcb0dfdd70aa73b214eef",
+      "functions": [],
+      "classes": [
+        {
+          "name": "TreeSitterWalker",
+          "methods": [
+            "constructor",
+            "walk",
+            "_visit"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 80
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 111,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

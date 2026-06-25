@@ -1,0 +1,71 @@
+[
+  {
+    "order": 1,
+    "title": "Start with package metadata and analysis boundaries",
+    "description": "Begin in package.json to see that this stage is a Node 18 CLI built around tree-sitter and exposed through index.js. Then glance at .gitignore and .understandignore to understand which generated artifacts or noisy paths are intentionally kept out of version control and analysis.",
+    "nodeIds": [
+      "config:package.json",
+      "config:.gitignore",
+      "config:.understand-anything/.understandignore"
+    ]
+  },
+  {
+    "order": 2,
+    "title": "Read the composition root in index.js",
+    "description": "index.js is the dependency-injection root and the best mental starting point for the runtime architecture. It wires together discovery, parser registration, AST walking, extractors, and JSON output, then turns CLI arguments into a single pipeline run.",
+    "nodeIds": [
+      "file:index.js"
+    ]
+  },
+  {
+    "order": 3,
+    "title": "Follow end-to-end orchestration and file discovery",
+    "description": "AnalysisPipeline.js shows the control flow for the whole stage: discover files, choose a parser, walk the parsed tree, and write accumulated facts. FileDiscovery.js explains the first filtering boundary by recursively finding only supported source files while skipping hidden folders and common build output.",
+    "nodeIds": [
+      "file:pipeline/AnalysisPipeline.js",
+      "file:utils/FileDiscovery.js"
+    ]
+  },
+  {
+    "order": 4,
+    "title": "Understand how source files become parse results",
+    "description": "The parsing layer separates interface from implementation so the pipeline never hard-codes language details. Read IParser.js for the contract, ParserRegistry.js for extension-based parser selection, and TreeSitterParser.js for the concrete JavaScript/JSX parser that returns tree-sitter parse results.",
+    "nodeIds": [
+      "file:parser/IParser.js",
+      "file:parser/ParserRegistry.js",
+      "file:parser/TreeSitterParser.js"
+    ]
+  },
+  {
+    "order": 5,
+    "title": "See how parsed trees are traversed and dispatched",
+    "description": "The walker layer turns one parse result into one file-level facts object. IASTWalker.js defines that contract, while TreeSitterWalker.js implements a depth-first traversal with a node-type dispatch table so only relevant extractors run for each syntax node.",
+    "nodeIds": [
+      "file:walker/IASTWalker.js",
+      "file:walker/TreeSitterWalker.js"
+    ]
+  },
+  {
+    "order": 6,
+    "title": "Study the extractor model and fact categories",
+    "description": "IExtractor.js defines the extension point that keeps each fact category single-purpose and pluggable. The concrete extractors then map specific tree-sitter node types into normalized architectural facts for imports, exports, functions, calls and JSX usage, and classes.",
+    "nodeIds": [
+      "file:extractors/IExtractor.js",
+      "file:extractors/ImportExtractor.js",
+      "file:extractors/ExportExtractor.js",
+      "file:extractors/FunctionExtractor.js",
+      "file:extractors/CallExtractor.js",
+      "file:extractors/ClassExtractor.js"
+    ]
+  },
+  {
+    "order": 7,
+    "title": "Finish at the output boundary and sample artifact",
+    "description": "The output layer shows how extracted facts leave the pipeline without coupling orchestration to one storage format. IFactWriter.js defines the persistence contract, JsonFactWriter.js implements JSON serialization, and micro-lap-facts.json gives you a concrete example of the final per-file schema emitted by this stage.",
+    "nodeIds": [
+      "file:output/IFactWriter.js",
+      "file:output/JsonFactWriter.js",
+      "file:output/micro-lap-facts.json"
+    ]
+  }
+]

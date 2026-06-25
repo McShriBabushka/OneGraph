@@ -1,0 +1,63 @@
+[
+  {
+    "id": "layer:entry-and-orchestration",
+    "name": "Entry & Orchestration",
+    "description": "CLI entry point and pipeline coordinator that wire all components together for end-to-end analysis runs.",
+    "nodeIds": [
+      "file:index.js",
+      "file:pipeline/AnalysisPipeline.js"
+    ]
+  },
+  {
+    "id": "layer:parsing",
+    "name": "Parsing",
+    "description": "Parser abstractions, parser selection, and tree-sitter-backed source parsing for JavaScript and JSX files.",
+    "nodeIds": [
+      "file:parser/IParser.js",
+      "file:parser/ParserRegistry.js",
+      "file:parser/TreeSitterParser.js"
+    ]
+  },
+  {
+    "id": "layer:ast-walking",
+    "name": "AST Walking",
+    "description": "AST traversal contracts and tree-sitter walking logic that dispatch parsed nodes to extractors.",
+    "nodeIds": [
+      "file:walker/IASTWalker.js",
+      "file:walker/TreeSitterWalker.js"
+    ]
+  },
+  {
+    "id": "layer:fact-extraction",
+    "name": "Fact Extraction",
+    "description": "Extractor contracts and concrete AST extractors that derive imports, exports, functions, calls, and classes as facts.",
+    "nodeIds": [
+      "file:extractors/CallExtractor.js",
+      "file:extractors/ClassExtractor.js",
+      "file:extractors/ExportExtractor.js",
+      "file:extractors/FunctionExtractor.js",
+      "file:extractors/IExtractor.js",
+      "file:extractors/ImportExtractor.js"
+    ]
+  },
+  {
+    "id": "layer:output",
+    "name": "Output",
+    "description": "Fact writer abstractions, JSON serialization, and representative generated fact output artifacts.",
+    "nodeIds": [
+      "file:output/IFactWriter.js",
+      "file:output/JsonFactWriter.js",
+      "file:output/micro-lap-facts.json"
+    ]
+  },
+  {
+    "id": "layer:configuration",
+    "name": "Configuration",
+    "description": "Project and analysis configuration files that define package metadata and ignore rules for repository and tooling behavior.",
+    "nodeIds": [
+      "config:.gitignore",
+      "config:package.json",
+      "config:.understand-anything/.understandignore"
+    ]
+  }
+]

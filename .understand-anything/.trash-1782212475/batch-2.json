@@ -1,0 +1,123 @@
+{
+  "nodes": [
+    {
+      "id": "config:.gitignore",
+      "type": "config",
+      "name": ".gitignore",
+      "filePath": ".gitignore",
+      "summary": "Defines ignored working artifacts so dependencies, generated output, and log files are excluded from repository tracking.",
+      "tags": [
+        "ignore-rules",
+        "git",
+        "workspace-config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:index.js",
+      "type": "file",
+      "name": "index.js",
+      "filePath": "index.js",
+      "summary": "CLI entry point that wires concrete parser, walker, extractor, discovery, and writer implementations into the analysis pipeline and runs it against a source directory.",
+      "tags": [
+        "entry-point",
+        "cli",
+        "orchestration"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:index.js#fatal-error-handler",
+      "type": "function",
+      "name": "fatal error handler",
+      "filePath": "index.js",
+      "summary": "Promise rejection handler for pipeline execution that logs a fatal pipeline error and exits the CLI with a non-zero status.",
+      "tags": [
+        "error-handling",
+        "promise-callback",
+        "cli"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "Declares the OneGraph AST pipeline package metadata, its CLI entry point, Node.js engine requirement, analysis script, and tree-sitter dependencies.",
+      "tags": [
+        "node",
+        "npm",
+        "project-config"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "type": "contains",
+      "from": "file:index.js",
+      "to": "function:index.js#fatal-error-handler"
+    },
+    {
+      "type": "imports",
+      "from": "file:index.js",
+      "to": "file:parser/TreeSitterParser.js"
+    },
+    {
+      "type": "imports",
+      "from": "file:index.js",
+      "to": "file:parser/ParserRegistry.js"
+    },
+    {
+      "type": "imports",
+      "from": "file:index.js",
+      "to": "file:walker/TreeSitterWalker.js"
+    },
+    {
+      "type": "imports",
+      "from": "file:index.js",
+      "to": "file:extractors/ImportExtractor.js"
+    },
+    {
+      "type": "imports",
+      "from": "file:index.js",
+      "to": "file:extractors/ExportExtractor.js"
+    },
+    {
+      "type": "imports",
+      "from": "file:index.js",
+      "to": "file:extractors/FunctionExtractor.js"
+    },
+    {
+      "type": "imports",
+      "from": "file:index.js",
+      "to": "file:extractors/CallExtractor.js"
+    },
+    {
+      "type": "imports",
+      "from": "file:index.js",
+      "to": "file:extractors/ClassExtractor.js"
+    },
+    {
+      "type": "imports",
+      "from": "file:index.js",
+      "to": "file:output/JsonFactWriter.js"
+    },
+    {
+      "type": "imports",
+      "from": "file:index.js",
+      "to": "file:utils/FileDiscovery.js"
+    },
+    {
+      "type": "imports",
+      "from": "file:index.js",
+      "to": "file:pipeline/AnalysisPipeline.js"
+    },
+    {
+      "type": "configures",
+      "from": "config:package.json",
+      "to": "file:index.js"
+    }
+  ]
+}

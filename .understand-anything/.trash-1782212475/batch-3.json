@@ -1,0 +1,713 @@
+{
+  "nodes": [
+    {
+      "id": "config:.understand-anything/.understandignore",
+      "type": "config",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Project-specific ignore template for understand-anything analysis, documenting optional exclusion patterns for generated outputs and test files.",
+      "tags": [
+        "analysis",
+        "ignore",
+        "config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:output/IFactWriter.js",
+      "type": "file",
+      "name": "IFactWriter.js",
+      "filePath": "output/IFactWriter.js",
+      "summary": "Defines the abstract fact-writer contract that decouples pipeline execution from the concrete persistence mechanism.",
+      "tags": [
+        "output",
+        "facts",
+        "interface"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:output/IFactWriter.js:IFactWriter",
+      "type": "class",
+      "name": "IFactWriter",
+      "filePath": "output/IFactWriter.js",
+      "summary": "Abstract base class for persisting extracted file facts to a destination chosen by a concrete writer.",
+      "tags": [
+        "output",
+        "abstraction",
+        "writer"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:output/IFactWriter.js:write",
+      "type": "function",
+      "name": "write",
+      "filePath": "output/IFactWriter.js",
+      "summary": "Abstract persistence method that concrete writers must implement to store collected facts.",
+      "tags": [
+        "output",
+        "facts",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:output/JsonFactWriter.js",
+      "type": "file",
+      "name": "JsonFactWriter.js",
+      "filePath": "output/JsonFactWriter.js",
+      "summary": "Implements IFactWriter by serializing all extracted facts as a pretty-printed JSON array on disk.",
+      "tags": [
+        "output",
+        "json",
+        "facts"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:output/JsonFactWriter.js:JsonFactWriter",
+      "type": "class",
+      "name": "JsonFactWriter",
+      "filePath": "output/JsonFactWriter.js",
+      "summary": "Concrete fact writer that creates the destination directory and writes facts using configurable JSON indentation.",
+      "tags": [
+        "output",
+        "json",
+        "writer"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:output/JsonFactWriter.js:write",
+      "type": "function",
+      "name": "write",
+      "filePath": "output/JsonFactWriter.js",
+      "summary": "Ensures the output directory exists and writes the facts array to a UTF-8 JSON file.",
+      "tags": [
+        "json",
+        "persistence",
+        "filesystem"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:output/micro-lap-facts.json",
+      "type": "file",
+      "name": "micro-lap-facts.json",
+      "filePath": "output/micro-lap-facts.json",
+      "summary": "Large sample facts export showing the pipeline's per-file JSON schema for imports, exports, functions, calls, and classes.",
+      "tags": [
+        "json",
+        "facts",
+        "sample-output"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:parser/IParser.js",
+      "type": "file",
+      "name": "IParser.js",
+      "filePath": "parser/IParser.js",
+      "summary": "Defines the parser abstraction used by the pipeline to turn source files into language-agnostic parse results.",
+      "tags": [
+        "parser",
+        "interface",
+        "ast"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:parser/IParser.js:IParser",
+      "type": "class",
+      "name": "IParser",
+      "filePath": "parser/IParser.js",
+      "summary": "Abstract parser contract for reading a file and returning a normalized parse result plus supported extensions.",
+      "tags": [
+        "parser",
+        "abstraction",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:parser/IParser.js:parse",
+      "type": "function",
+      "name": "parse",
+      "filePath": "parser/IParser.js",
+      "summary": "Abstract parse operation that converts one source file into a parse result.",
+      "tags": [
+        "parser",
+        "ast",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:parser/IParser.js:getSupportedExtensions",
+      "type": "function",
+      "name": "getSupportedExtensions",
+      "filePath": "parser/IParser.js",
+      "summary": "Abstract capability query used by the registry to map file extensions to parser implementations.",
+      "tags": [
+        "parser",
+        "extensions",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:parser/ParserRegistry.js",
+      "type": "file",
+      "name": "ParserRegistry.js",
+      "filePath": "parser/ParserRegistry.js",
+      "summary": "Maintains the extension-to-parser lookup used by the pipeline to select a parser for each discovered source file.",
+      "tags": [
+        "parser",
+        "registry",
+        "routing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:parser/ParserRegistry.js:ParserRegistry",
+      "type": "class",
+      "name": "ParserRegistry",
+      "filePath": "parser/ParserRegistry.js",
+      "summary": "Registry that stores parser instances by file extension and exposes lookup and introspection helpers.",
+      "tags": [
+        "parser",
+        "registry",
+        "extensions"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:parser/ParserRegistry.js:register",
+      "type": "function",
+      "name": "register",
+      "filePath": "parser/ParserRegistry.js",
+      "summary": "Registers a parser for every extension it advertises, allowing later overrides.",
+      "tags": [
+        "parser",
+        "registry",
+        "extensions"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:parser/ParserRegistry.js:getParserFor",
+      "type": "function",
+      "name": "getParserFor",
+      "filePath": "parser/ParserRegistry.js",
+      "summary": "Selects the parser instance associated with a file path's extension.",
+      "tags": [
+        "parser",
+        "lookup",
+        "extensions"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:parser/ParserRegistry.js:registeredExtensions",
+      "type": "function",
+      "name": "registeredExtensions",
+      "filePath": "parser/ParserRegistry.js",
+      "summary": "Returns the set of extensions currently handled by the registry.",
+      "tags": [
+        "parser",
+        "registry",
+        "introspection"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:parser/TreeSitterParser.js",
+      "type": "file",
+      "name": "TreeSitterParser.js",
+      "filePath": "parser/TreeSitterParser.js",
+      "summary": "Concrete JavaScript/JSX parser that uses tree-sitter to produce parse results for downstream traversal.",
+      "tags": [
+        "parser",
+        "tree-sitter",
+        "javascript"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:parser/TreeSitterParser.js:TreeSitterParser",
+      "type": "class",
+      "name": "TreeSitterParser",
+      "filePath": "parser/TreeSitterParser.js",
+      "summary": "IParser implementation backed by tree-sitter-javascript for .js and .jsx files.",
+      "tags": [
+        "parser",
+        "tree-sitter",
+        "javascript"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:parser/TreeSitterParser.js:getSupportedExtensions",
+      "type": "function",
+      "name": "getSupportedExtensions",
+      "filePath": "parser/TreeSitterParser.js",
+      "summary": "Advertises JavaScript and JSX extensions handled by this parser.",
+      "tags": [
+        "parser",
+        "extensions",
+        "javascript"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:parser/TreeSitterParser.js:parse",
+      "type": "function",
+      "name": "parse",
+      "filePath": "parser/TreeSitterParser.js",
+      "summary": "Reads source text from disk and parses it into a tree-sitter syntax tree packaged as a parse result.",
+      "tags": [
+        "parser",
+        "tree-sitter",
+        "ast"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:pipeline/AnalysisPipeline.js",
+      "type": "file",
+      "name": "AnalysisPipeline.js",
+      "filePath": "pipeline/AnalysisPipeline.js",
+      "summary": "Coordinates discovery, parser selection, AST walking, and fact writing for an end-to-end analysis run.",
+      "tags": [
+        "pipeline",
+        "orchestration",
+        "facts"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:pipeline/AnalysisPipeline.js:AnalysisPipeline",
+      "type": "class",
+      "name": "AnalysisPipeline",
+      "filePath": "pipeline/AnalysisPipeline.js",
+      "summary": "Dependency-injected orchestrator that processes discovered files, accumulates facts, and persists the final result.",
+      "tags": [
+        "pipeline",
+        "orchestration",
+        "dependency-injection"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:pipeline/AnalysisPipeline.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "pipeline/AnalysisPipeline.js",
+      "summary": "Executes the full pipeline, tracking parsed, skipped, and errored files before writing the collected facts.",
+      "tags": [
+        "pipeline",
+        "execution",
+        "orchestration"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:utils/FileDiscovery.js",
+      "type": "file",
+      "name": "FileDiscovery.js",
+      "filePath": "utils/FileDiscovery.js",
+      "summary": "Recursively walks a source tree and collects files whose extensions match the configured language set.",
+      "tags": [
+        "discovery",
+        "filesystem",
+        "source-files"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:utils/FileDiscovery.js:FileDiscovery",
+      "type": "class",
+      "name": "FileDiscovery",
+      "filePath": "utils/FileDiscovery.js",
+      "summary": "Filesystem traversal utility that skips hidden or noisy directories while gathering matching source files.",
+      "tags": [
+        "filesystem",
+        "discovery",
+        "recursion"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:utils/FileDiscovery.js:discover",
+      "type": "function",
+      "name": "discover",
+      "filePath": "utils/FileDiscovery.js",
+      "summary": "Public entry point that accumulates matching files under a root directory.",
+      "tags": [
+        "filesystem",
+        "discovery",
+        "entrypoint"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:utils/FileDiscovery.js:_walk",
+      "type": "function",
+      "name": "_walk",
+      "filePath": "utils/FileDiscovery.js",
+      "summary": "Recursive directory walker that filters unreadable, hidden, and excluded paths before collecting matches.",
+      "tags": [
+        "filesystem",
+        "recursion",
+        "traversal"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:walker/IASTWalker.js",
+      "type": "file",
+      "name": "IASTWalker.js",
+      "filePath": "walker/IASTWalker.js",
+      "summary": "Defines the AST traversal abstraction that turns parse results into structured file facts.",
+      "tags": [
+        "walker",
+        "ast",
+        "interface"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:walker/IASTWalker.js:IASTWalker",
+      "type": "class",
+      "name": "IASTWalker",
+      "filePath": "walker/IASTWalker.js",
+      "summary": "Abstract traversal contract for walkers that visit syntax trees and emit file-level facts.",
+      "tags": [
+        "walker",
+        "abstraction",
+        "traversal"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:walker/IASTWalker.js:walk",
+      "type": "function",
+      "name": "walk",
+      "filePath": "walker/IASTWalker.js",
+      "summary": "Abstract traversal method that accepts a parse result and returns extracted facts.",
+      "tags": [
+        "walker",
+        "traversal",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:walker/TreeSitterWalker.js",
+      "type": "file",
+      "name": "TreeSitterWalker.js",
+      "filePath": "walker/TreeSitterWalker.js",
+      "summary": "Implements depth-first tree-sitter traversal with a dispatch table that routes nodes to interested extractors.",
+      "tags": [
+        "walker",
+        "tree-sitter",
+        "extractors"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:walker/TreeSitterWalker.js:TreeSitterWalker",
+      "type": "class",
+      "name": "TreeSitterWalker",
+      "filePath": "walker/TreeSitterWalker.js",
+      "summary": "Concrete AST walker that builds an extractor dispatch map and accumulates facts during recursive traversal.",
+      "tags": [
+        "walker",
+        "dispatch",
+        "tree-sitter"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:walker/TreeSitterWalker.js:walk",
+      "type": "function",
+      "name": "walk",
+      "filePath": "walker/TreeSitterWalker.js",
+      "summary": "Initializes the file-facts container and starts traversal from the syntax tree root.",
+      "tags": [
+        "walker",
+        "facts",
+        "entrypoint"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:walker/TreeSitterWalker.js:_visit",
+      "type": "function",
+      "name": "_visit",
+      "filePath": "walker/TreeSitterWalker.js",
+      "summary": "Visits one node, dispatches to registered extractors, and recursively descends through all children.",
+      "tags": [
+        "walker",
+        "dispatch",
+        "recursion"
+      ],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "id": "imports:file:output/JsonFactWriter.js->file:output/IFactWriter.js",
+      "type": "imports",
+      "source": "file:output/JsonFactWriter.js",
+      "target": "file:output/IFactWriter.js",
+      "summary": "JsonFactWriter depends on the abstract IFactWriter contract."
+    },
+    {
+      "id": "imports:file:parser/TreeSitterParser.js->file:parser/IParser.js",
+      "type": "imports",
+      "source": "file:parser/TreeSitterParser.js",
+      "target": "file:parser/IParser.js",
+      "summary": "TreeSitterParser extends the parser abstraction defined in IParser."
+    },
+    {
+      "id": "imports:file:walker/TreeSitterWalker.js->file:walker/IASTWalker.js",
+      "type": "imports",
+      "source": "file:walker/TreeSitterWalker.js",
+      "target": "file:walker/IASTWalker.js",
+      "summary": "TreeSitterWalker imports the abstract AST walker contract."
+    },
+    {
+      "id": "imports:file:index.js->file:output/JsonFactWriter.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:output/JsonFactWriter.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline."
+    },
+    {
+      "id": "imports:file:index.js->file:parser/ParserRegistry.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:parser/ParserRegistry.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline."
+    },
+    {
+      "id": "imports:file:index.js->file:parser/TreeSitterParser.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:parser/TreeSitterParser.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline."
+    },
+    {
+      "id": "imports:file:index.js->file:pipeline/AnalysisPipeline.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:pipeline/AnalysisPipeline.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline."
+    },
+    {
+      "id": "imports:file:index.js->file:utils/FileDiscovery.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:utils/FileDiscovery.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline."
+    },
+    {
+      "id": "imports:file:index.js->file:walker/TreeSitterWalker.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:walker/TreeSitterWalker.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline."
+    },
+    {
+      "id": "contains:file:output/IFactWriter.js->class:output/IFactWriter.js:IFactWriter",
+      "type": "contains",
+      "source": "file:output/IFactWriter.js",
+      "target": "class:output/IFactWriter.js:IFactWriter",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:output/IFactWriter.js->function:output/IFactWriter.js:write",
+      "type": "contains",
+      "source": "file:output/IFactWriter.js",
+      "target": "function:output/IFactWriter.js:write",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:output/JsonFactWriter.js->class:output/JsonFactWriter.js:JsonFactWriter",
+      "type": "contains",
+      "source": "file:output/JsonFactWriter.js",
+      "target": "class:output/JsonFactWriter.js:JsonFactWriter",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:output/JsonFactWriter.js->function:output/JsonFactWriter.js:write",
+      "type": "contains",
+      "source": "file:output/JsonFactWriter.js",
+      "target": "function:output/JsonFactWriter.js:write",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:parser/IParser.js->class:parser/IParser.js:IParser",
+      "type": "contains",
+      "source": "file:parser/IParser.js",
+      "target": "class:parser/IParser.js:IParser",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:parser/IParser.js->function:parser/IParser.js:parse",
+      "type": "contains",
+      "source": "file:parser/IParser.js",
+      "target": "function:parser/IParser.js:parse",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:parser/IParser.js->function:parser/IParser.js:getSupportedExtensions",
+      "type": "contains",
+      "source": "file:parser/IParser.js",
+      "target": "function:parser/IParser.js:getSupportedExtensions",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:parser/ParserRegistry.js->class:parser/ParserRegistry.js:ParserRegistry",
+      "type": "contains",
+      "source": "file:parser/ParserRegistry.js",
+      "target": "class:parser/ParserRegistry.js:ParserRegistry",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:parser/ParserRegistry.js->function:parser/ParserRegistry.js:register",
+      "type": "contains",
+      "source": "file:parser/ParserRegistry.js",
+      "target": "function:parser/ParserRegistry.js:register",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:parser/ParserRegistry.js->function:parser/ParserRegistry.js:getParserFor",
+      "type": "contains",
+      "source": "file:parser/ParserRegistry.js",
+      "target": "function:parser/ParserRegistry.js:getParserFor",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:parser/ParserRegistry.js->function:parser/ParserRegistry.js:registeredExtensions",
+      "type": "contains",
+      "source": "file:parser/ParserRegistry.js",
+      "target": "function:parser/ParserRegistry.js:registeredExtensions",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:parser/TreeSitterParser.js->class:parser/TreeSitterParser.js:TreeSitterParser",
+      "type": "contains",
+      "source": "file:parser/TreeSitterParser.js",
+      "target": "class:parser/TreeSitterParser.js:TreeSitterParser",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:parser/TreeSitterParser.js->function:parser/TreeSitterParser.js:getSupportedExtensions",
+      "type": "contains",
+      "source": "file:parser/TreeSitterParser.js",
+      "target": "function:parser/TreeSitterParser.js:getSupportedExtensions",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:parser/TreeSitterParser.js->function:parser/TreeSitterParser.js:parse",
+      "type": "contains",
+      "source": "file:parser/TreeSitterParser.js",
+      "target": "function:parser/TreeSitterParser.js:parse",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:pipeline/AnalysisPipeline.js->class:pipeline/AnalysisPipeline.js:AnalysisPipeline",
+      "type": "contains",
+      "source": "file:pipeline/AnalysisPipeline.js",
+      "target": "class:pipeline/AnalysisPipeline.js:AnalysisPipeline",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:pipeline/AnalysisPipeline.js->function:pipeline/AnalysisPipeline.js:run",
+      "type": "contains",
+      "source": "file:pipeline/AnalysisPipeline.js",
+      "target": "function:pipeline/AnalysisPipeline.js:run",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:utils/FileDiscovery.js->class:utils/FileDiscovery.js:FileDiscovery",
+      "type": "contains",
+      "source": "file:utils/FileDiscovery.js",
+      "target": "class:utils/FileDiscovery.js:FileDiscovery",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:utils/FileDiscovery.js->function:utils/FileDiscovery.js:discover",
+      "type": "contains",
+      "source": "file:utils/FileDiscovery.js",
+      "target": "function:utils/FileDiscovery.js:discover",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:utils/FileDiscovery.js->function:utils/FileDiscovery.js:_walk",
+      "type": "contains",
+      "source": "file:utils/FileDiscovery.js",
+      "target": "function:utils/FileDiscovery.js:_walk",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:walker/IASTWalker.js->class:walker/IASTWalker.js:IASTWalker",
+      "type": "contains",
+      "source": "file:walker/IASTWalker.js",
+      "target": "class:walker/IASTWalker.js:IASTWalker",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:walker/IASTWalker.js->function:walker/IASTWalker.js:walk",
+      "type": "contains",
+      "source": "file:walker/IASTWalker.js",
+      "target": "function:walker/IASTWalker.js:walk",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:walker/TreeSitterWalker.js->class:walker/TreeSitterWalker.js:TreeSitterWalker",
+      "type": "contains",
+      "source": "file:walker/TreeSitterWalker.js",
+      "target": "class:walker/TreeSitterWalker.js:TreeSitterWalker",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:walker/TreeSitterWalker.js->function:walker/TreeSitterWalker.js:walk",
+      "type": "contains",
+      "source": "file:walker/TreeSitterWalker.js",
+      "target": "function:walker/TreeSitterWalker.js:walk",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "contains:file:walker/TreeSitterWalker.js->function:walker/TreeSitterWalker.js:_visit",
+      "type": "contains",
+      "source": "file:walker/TreeSitterWalker.js",
+      "target": "function:walker/TreeSitterWalker.js:_visit",
+      "summary": "This source file defines the contained symbol."
+    },
+    {
+      "id": "inherits:class:output/JsonFactWriter.js:JsonFactWriter->class:output/IFactWriter.js:IFactWriter",
+      "type": "inherits",
+      "source": "class:output/JsonFactWriter.js:JsonFactWriter",
+      "target": "class:output/IFactWriter.js:IFactWriter",
+      "summary": "JsonFactWriter extends the abstract fact-writer base class."
+    },
+    {
+      "id": "inherits:class:parser/TreeSitterParser.js:TreeSitterParser->class:parser/IParser.js:IParser",
+      "type": "inherits",
+      "source": "class:parser/TreeSitterParser.js:TreeSitterParser",
+      "target": "class:parser/IParser.js:IParser",
+      "summary": "TreeSitterParser extends the abstract parser contract."
+    },
+    {
+      "id": "inherits:class:walker/TreeSitterWalker.js:TreeSitterWalker->class:walker/IASTWalker.js:IASTWalker",
+      "type": "inherits",
+      "source": "class:walker/TreeSitterWalker.js:TreeSitterWalker",
+      "target": "class:walker/IASTWalker.js:IASTWalker",
+      "summary": "TreeSitterWalker extends the abstract AST walker contract."
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "name": "onegraph-ast-pipeline",
+  "description": "Stage 1 of the OneGraph compiler pipeline — AST-based architectural fact extractor for JS/JSX repositories",
+  "languages": [
+    "gitignore",
+    "javascript",
+    "json"
+  ],
+  "frameworks": [
+    "tree-sitter"
+  ],
+  "complexityEstimate": "medium",
+  "filteredByIgnore": 137,
+  "files": [
+    {
+      "path": ".gitignore",
+      "language": "gitignore",
+      "sizeLines": 3,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "gitignore",
+      "sizeLines": 31,
+      "fileCategory": "config"
+    },
+    {
+      "path": "extractors/CallExtractor.js",
+      "language": "javascript",
+      "sizeLines": 195,
+      "fileCategory": "code"
+    },
+    {
+      "path": "extractors/ClassExtractor.js",
+      "language": "javascript",
+      "sizeLines": 139,
+      "fileCategory": "code"
+    },
+    {
+      "path": "extractors/ExportExtractor.js",
+      "language": "javascript",
+      "sizeLines": 147,
+      "fileCategory": "code"
+    },
+    {
+      "path": "extractors/FunctionExtractor.js",
+      "language": "javascript",
+      "sizeLines": 202,
+      "fileCategory": "code"
+    },
+    {
+      "path": "extractors/IExtractor.js",
+      "language": "javascript",
+      "sizeLines": 73,
+      "fileCategory": "code"
+    },
+    {
+      "path": "extractors/ImportExtractor.js",
+      "language": "javascript",
+      "sizeLines": 152,
+      "fileCategory": "code"
+    },
+    {
+      "path": "index.js",
+      "language": "javascript",
+      "sizeLines": 90,
+      "fileCategory": "script"
+    },
+    {
+      "path": "output/IFactWriter.js",
+      "language": "javascript",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "output/JsonFactWriter.js",
+      "language": "javascript",
+      "sizeLines": 51,
+      "fileCategory": "code"
+    },
+    {
+      "path": "output/micro-lap-facts.json",
+      "language": "json",
+      "sizeLines": 16541,
+      "fileCategory": "data"
+    },
+    {
+      "path": "package.json",
+      "language": "json",
+      "sizeLines": 16,
+      "fileCategory": "config"
+    },
+    {
+      "path": "parser/IParser.js",
+      "language": "javascript",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "parser/ParserRegistry.js",
+      "language": "javascript",
+      "sizeLines": 61,
+      "fileCategory": "code"
+    },
+    {
+      "path": "parser/TreeSitterParser.js",
+      "language": "javascript",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "pipeline/AnalysisPipeline.js",
+      "language": "javascript",
+      "sizeLines": 87,
+      "fileCategory": "code"
+    },
+    {
+      "path": "utils/FileDiscovery.js",
+      "language": "javascript",
+      "sizeLines": 74,
+      "fileCategory": "code"
+    },
+    {
+      "path": "walker/IASTWalker.js",
+      "language": "javascript",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "walker/TreeSitterWalker.js",
+      "language": "javascript",
+      "sizeLines": 110,
+      "fileCategory": "code"
+    }
+  ],
+  "importMap": {
+    "extractors/CallExtractor.js": [
+      "extractors/IExtractor.js"
+    ],
+    "extractors/ClassExtractor.js": [
+      "extractors/IExtractor.js"
+    ],
+    "extractors/ExportExtractor.js": [
+      "extractors/IExtractor.js"
+    ],
+    "extractors/FunctionExtractor.js": [
+      "extractors/IExtractor.js"
+    ],
+    "extractors/IExtractor.js": [],
+    "extractors/ImportExtractor.js": [
+      "extractors/IExtractor.js"
+    ],
+    "index.js": [
+      "parser/TreeSitterParser.js",
+      "parser/ParserRegistry.js",
+      "walker/TreeSitterWalker.js",
+      "extractors/ImportExtractor.js",
+      "extractors/ExportExtractor.js",
+      "extractors/FunctionExtractor.js",
+      "extractors/CallExtractor.js",
+      "extractors/ClassExtractor.js",
+      "output/JsonFactWriter.js",
+      "utils/FileDiscovery.js",
+      "pipeline/AnalysisPipeline.js"
+    ],
+    "output/IFactWriter.js": [],
+    "output/JsonFactWriter.js": [
+      "output/IFactWriter.js"
+    ],
+    "parser/IParser.js": [],
+    "parser/ParserRegistry.js": [],
+    "parser/TreeSitterParser.js": [
+      "parser/IParser.js"
+    ],
+    "pipeline/AnalysisPipeline.js": [],
+    "utils/FileDiscovery.js": [],
+    "walker/IASTWalker.js": [],
+    "walker/TreeSitterWalker.js": [
+      "walker/IASTWalker.js"
+    ]
+  }
+}

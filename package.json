@@ -1,0 +1,16 @@
+{
+  "name": "onegraph-ast-pipeline",
+  "version": "0.1.0",
+  "description": "Stage 1 of the OneGraph compiler pipeline — AST-based architectural fact extractor for JS/JSX repositories",
+  "main": "index.js",
+  "scripts": {
+    "analyze": "node index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "tree-sitter": "^0.21.1",
+    "tree-sitter-javascript": "^0.21.4"
+  }
+}

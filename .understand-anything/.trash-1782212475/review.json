@@ -1,0 +1,28 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'config:.gitignore' has no edges (orphan)",
+    "Node 'function:index.js#fatal-error-handler' has no edges (orphan)",
+    "Node 'config:package.json' has no edges (orphan)",
+    "Node 'config:.understand-anything/.understandignore' has no edges (orphan)",
+    "Node 'file:output/micro-lap-facts.json' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 84,
+    "totalEdges": 107,
+    "totalLayers": 6,
+    "tourSteps": 7,
+    "nodeTypes": {
+      "file": 17,
+      "class": 15,
+      "function": 49,
+      "config": 3
+    },
+    "edgeTypes": {
+      "contains": 63,
+      "imports": 19,
+      "inherits": 8,
+      "calls": 17
+    }
+  }
+}

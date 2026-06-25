@@ -1,0 +1,2039 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "onegraph-ast-pipeline",
+    "languages": [
+      "javascript",
+      "json"
+    ],
+    "frameworks": [
+      "tree-sitter"
+    ],
+    "description": "Stage 1 of the OneGraph compiler pipeline \u2014 AST-based architectural fact extractor for JS/JSX repositories",
+    "analyzedAt": "2026-06-23T11:00:23.687799Z",
+    "gitCommitHash": "N/A (not a git repository)"
+  },
+  "nodes": [
+    {
+      "id": "file:extractors/CallExtractor.js",
+      "type": "file",
+      "name": "CallExtractor.js",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Defines an AST extractor that normalizes function calls, constructor invocations, and JSX component usages into call facts.",
+      "tags": [
+        "extractor",
+        "ast",
+        "calls",
+        "jsx"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:extractors/ClassExtractor.js",
+      "type": "file",
+      "name": "ClassExtractor.js",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Defines an AST extractor that captures class declarations and expressions, including superclass and method metadata.",
+      "tags": [
+        "extractor",
+        "ast",
+        "classes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:extractors/ExportExtractor.js",
+      "type": "file",
+      "name": "ExportExtractor.js",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Defines an AST extractor that collects exported names and default or re-export metadata from export statements.",
+      "tags": [
+        "extractor",
+        "ast",
+        "exports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:extractors/FunctionExtractor.js",
+      "type": "file",
+      "name": "FunctionExtractor.js",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Defines an AST extractor that resolves named functions, methods, and React-style components across several JavaScript function forms.",
+      "tags": [
+        "extractor",
+        "ast",
+        "functions",
+        "react"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:extractors/IExtractor.js",
+      "type": "file",
+      "name": "IExtractor.js",
+      "filePath": "extractors/IExtractor.js",
+      "summary": "Defines the abstract extractor contract used by the walker for node-type registration, fact extraction, and fact storage keys.",
+      "tags": [
+        "extractor",
+        "contract",
+        "ast"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:extractors/ImportExtractor.js",
+      "type": "file",
+      "name": "ImportExtractor.js",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Defines an AST extractor that parses ES module import declarations into normalized source and specifier facts.",
+      "tags": [
+        "extractor",
+        "ast",
+        "imports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:extractors/CallExtractor.js:CallExtractor",
+      "type": "class",
+      "name": "CallExtractor",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Concrete extractor for call expressions, constructor calls, and JSX component references.",
+      "tags": [
+        "class",
+        "extractor",
+        "calls"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:extractors/ClassExtractor.js:ClassExtractor",
+      "type": "class",
+      "name": "ClassExtractor",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Concrete extractor for class declarations and class expressions with inheritance and method summaries.",
+      "tags": [
+        "class",
+        "extractor",
+        "classes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:extractors/ExportExtractor.js:ExportExtractor",
+      "type": "class",
+      "name": "ExportExtractor",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Concrete extractor for export statements and public API symbol discovery.",
+      "tags": [
+        "class",
+        "extractor",
+        "exports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:extractors/FunctionExtractor.js:FunctionExtractor",
+      "type": "class",
+      "name": "FunctionExtractor",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Concrete extractor for declarations, expressions, arrow functions, and class methods.",
+      "tags": [
+        "class",
+        "extractor",
+        "functions"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:extractors/IExtractor.js:IExtractor",
+      "type": "class",
+      "name": "IExtractor",
+      "filePath": "extractors/IExtractor.js",
+      "summary": "Abstract base contract that all fact extractors extend and implement.",
+      "tags": [
+        "class",
+        "contract",
+        "extractor"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:extractors/ImportExtractor.js:ImportExtractor",
+      "type": "class",
+      "name": "ImportExtractor",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Concrete extractor for ES module import declarations and imported binding specifiers.",
+      "tags": [
+        "class",
+        "extractor",
+        "imports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Returns the Tree-sitter node types that the call extractor handles.",
+      "tags": [
+        "function",
+        "method",
+        "registration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Returns the fact bucket key used to store extracted call facts.",
+      "tags": [
+        "function",
+        "method",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Dispatches each supported AST node to the appropriate call, constructor, or JSX extraction helper.",
+      "tags": [
+        "function",
+        "method",
+        "dispatch"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:_fromCallExpression",
+      "type": "function",
+      "name": "_fromCallExpression",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Converts a call expression into a normalized function, method, or expression call fact.",
+      "tags": [
+        "function",
+        "method",
+        "calls"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:_fromNewExpression",
+      "type": "function",
+      "name": "_fromNewExpression",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Converts a constructor invocation into a normalized constructor call fact.",
+      "tags": [
+        "function",
+        "method",
+        "calls"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:_fromJsxElement",
+      "type": "function",
+      "name": "_fromJsxElement",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Extracts a JSX component usage from a standard opening and closing JSX element.",
+      "tags": [
+        "function",
+        "method",
+        "jsx"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:_fromJsxSelfClosing",
+      "type": "function",
+      "name": "_fromJsxSelfClosing",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Extracts a JSX component usage from a self-closing JSX element.",
+      "tags": [
+        "function",
+        "method",
+        "jsx"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:_jsxFact",
+      "type": "function",
+      "name": "_jsxFact",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Builds a shared JSX component call fact and filters out lowercase intrinsic tags.",
+      "tags": [
+        "function",
+        "method",
+        "jsx"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/ClassExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Returns the Tree-sitter node types that the class extractor handles.",
+      "tags": [
+        "function",
+        "method",
+        "registration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ClassExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Returns the fact bucket key used to store extracted class facts.",
+      "tags": [
+        "function",
+        "method",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ClassExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Resolves class names, superclass references, and method metadata from class AST nodes.",
+      "tags": [
+        "function",
+        "method",
+        "classes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/ClassExtractor.js:resolveVariableName",
+      "type": "function",
+      "name": "resolveVariableName",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Resolves the variable binding name for an anonymous class expression assigned to a declarator.",
+      "tags": [
+        "function",
+        "helper",
+        "classes"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ExportExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Returns the Tree-sitter node types that the export extractor handles.",
+      "tags": [
+        "function",
+        "method",
+        "registration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ExportExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Returns the fact bucket key used to store extracted export facts.",
+      "tags": [
+        "function",
+        "method",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ExportExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Collects exported symbol names, default-export state, and re-export source metadata.",
+      "tags": [
+        "function",
+        "method",
+        "exports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/ExportExtractor.js:stripQuotes",
+      "type": "function",
+      "name": "stripQuotes",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Removes surrounding quote characters from a module source literal.",
+      "tags": [
+        "function",
+        "helper",
+        "strings"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Returns the Tree-sitter node types that the function extractor handles.",
+      "tags": [
+        "function",
+        "method",
+        "registration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Returns the fact bucket key used to store extracted function facts.",
+      "tags": [
+        "function",
+        "method",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Dispatches supported function and method nodes to the appropriate extraction strategy.",
+      "tags": [
+        "function",
+        "method",
+        "dispatch"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:_fromDeclaration",
+      "type": "function",
+      "name": "_fromDeclaration",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Builds a fact for a named function or generator declaration and marks likely React components.",
+      "tags": [
+        "function",
+        "method",
+        "functions"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:_fromParentVariable",
+      "type": "function",
+      "name": "_fromParentVariable",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Builds a fact for a function expression or arrow function using its parent variable binding.",
+      "tags": [
+        "function",
+        "method",
+        "functions"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:_fromMethodDef",
+      "type": "function",
+      "name": "_fromMethodDef",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Builds a fact for a class method and resolves its enclosing class name.",
+      "tags": [
+        "function",
+        "method",
+        "methods"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:resolveVariableName",
+      "type": "function",
+      "name": "resolveVariableName",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Finds the nearest variable declarator name for an assigned function expression or arrow function.",
+      "tags": [
+        "function",
+        "helper",
+        "functions"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:resolveParentClassName",
+      "type": "function",
+      "name": "resolveParentClassName",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Walks upward through parent nodes to resolve the enclosing class for a method definition.",
+      "tags": [
+        "function",
+        "helper",
+        "classes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:isComponent",
+      "type": "function",
+      "name": "isComponent",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Applies the uppercase-name heuristic used to classify likely React components.",
+      "tags": [
+        "function",
+        "helper",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/IExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/IExtractor.js",
+      "summary": "Abstract contract method for declaring which AST node types an extractor wants to receive.",
+      "tags": [
+        "function",
+        "method",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/IExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/IExtractor.js",
+      "summary": "Abstract contract method for converting a matching syntax node into a plain fact object.",
+      "tags": [
+        "function",
+        "method",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/IExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/IExtractor.js",
+      "summary": "Abstract contract method for naming the fact collection that stores an extractor's output.",
+      "tags": [
+        "function",
+        "method",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ImportExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Returns the Tree-sitter node types that the import extractor handles.",
+      "tags": [
+        "function",
+        "method",
+        "registration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ImportExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Returns the fact bucket key used to store extracted import facts.",
+      "tags": [
+        "function",
+        "method",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ImportExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Collects the imported module source and all declared import specifiers from an import statement.",
+      "tags": [
+        "function",
+        "method",
+        "imports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/ImportExtractor.js:_collectSpecifiers",
+      "type": "function",
+      "name": "_collectSpecifiers",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Normalizes default, named, and namespace import bindings from an import clause.",
+      "tags": [
+        "function",
+        "method",
+        "imports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/ImportExtractor.js:stripQuotes",
+      "type": "function",
+      "name": "stripQuotes",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Removes surrounding quote characters from an import source literal.",
+      "tags": [
+        "function",
+        "helper",
+        "strings"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.gitignore",
+      "type": "config",
+      "name": ".gitignore",
+      "filePath": ".gitignore",
+      "summary": "Defines ignored working artifacts so dependencies, generated output, and log files are excluded from repository tracking.",
+      "tags": [
+        "ignore-rules",
+        "git",
+        "workspace-config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:index.js",
+      "type": "file",
+      "name": "index.js",
+      "filePath": "index.js",
+      "summary": "CLI entry point that wires concrete parser, walker, extractor, discovery, and writer implementations into the analysis pipeline and runs it against a source directory.",
+      "tags": [
+        "entry-point",
+        "cli",
+        "orchestration"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:index.js#fatal-error-handler",
+      "type": "function",
+      "name": "fatal error handler",
+      "filePath": "index.js",
+      "summary": "Promise rejection handler for pipeline execution that logs a fatal pipeline error and exits the CLI with a non-zero status.",
+      "tags": [
+        "error-handling",
+        "promise-callback",
+        "cli"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "Declares the OneGraph AST pipeline package metadata, its CLI entry point, Node.js engine requirement, analysis script, and tree-sitter dependencies.",
+      "tags": [
+        "node",
+        "npm",
+        "project-config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/.understandignore",
+      "type": "config",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Project-specific ignore template for understand-anything analysis, documenting optional exclusion patterns for generated outputs and test files.",
+      "tags": [
+        "analysis",
+        "ignore",
+        "config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:output/IFactWriter.js",
+      "type": "file",
+      "name": "IFactWriter.js",
+      "filePath": "output/IFactWriter.js",
+      "summary": "Defines the abstract fact-writer contract that decouples pipeline execution from the concrete persistence mechanism.",
+      "tags": [
+        "output",
+        "facts",
+        "interface"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:output/IFactWriter.js:IFactWriter",
+      "type": "class",
+      "name": "IFactWriter",
+      "filePath": "output/IFactWriter.js",
+      "summary": "Abstract base class for persisting extracted file facts to a destination chosen by a concrete writer.",
+      "tags": [
+        "output",
+        "abstraction",
+        "writer"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:output/IFactWriter.js:write",
+      "type": "function",
+      "name": "write",
+      "filePath": "output/IFactWriter.js",
+      "summary": "Abstract persistence method that concrete writers must implement to store collected facts.",
+      "tags": [
+        "output",
+        "facts",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:output/JsonFactWriter.js",
+      "type": "file",
+      "name": "JsonFactWriter.js",
+      "filePath": "output/JsonFactWriter.js",
+      "summary": "Implements IFactWriter by serializing all extracted facts as a pretty-printed JSON array on disk.",
+      "tags": [
+        "output",
+        "json",
+        "facts"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:output/JsonFactWriter.js:JsonFactWriter",
+      "type": "class",
+      "name": "JsonFactWriter",
+      "filePath": "output/JsonFactWriter.js",
+      "summary": "Concrete fact writer that creates the destination directory and writes facts using configurable JSON indentation.",
+      "tags": [
+        "output",
+        "json",
+        "writer"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:output/JsonFactWriter.js:write",
+      "type": "function",
+      "name": "write",
+      "filePath": "output/JsonFactWriter.js",
+      "summary": "Ensures the output directory exists and writes the facts array to a UTF-8 JSON file.",
+      "tags": [
+        "json",
+        "persistence",
+        "filesystem"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:output/micro-lap-facts.json",
+      "type": "file",
+      "name": "micro-lap-facts.json",
+      "filePath": "output/micro-lap-facts.json",
+      "summary": "Large sample facts export showing the pipeline's per-file JSON schema for imports, exports, functions, calls, and classes.",
+      "tags": [
+        "json",
+        "facts",
+        "sample-output"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:parser/IParser.js",
+      "type": "file",
+      "name": "IParser.js",
+      "filePath": "parser/IParser.js",
+      "summary": "Defines the parser abstraction used by the pipeline to turn source files into language-agnostic parse results.",
+      "tags": [
+        "parser",
+        "interface",
+        "ast"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:parser/IParser.js:IParser",
+      "type": "class",
+      "name": "IParser",
+      "filePath": "parser/IParser.js",
+      "summary": "Abstract parser contract for reading a file and returning a normalized parse result plus supported extensions.",
+      "tags": [
+        "parser",
+        "abstraction",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:parser/IParser.js:parse",
+      "type": "function",
+      "name": "parse",
+      "filePath": "parser/IParser.js",
+      "summary": "Abstract parse operation that converts one source file into a parse result.",
+      "tags": [
+        "parser",
+        "ast",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:parser/IParser.js:getSupportedExtensions",
+      "type": "function",
+      "name": "getSupportedExtensions",
+      "filePath": "parser/IParser.js",
+      "summary": "Abstract capability query used by the registry to map file extensions to parser implementations.",
+      "tags": [
+        "parser",
+        "extensions",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:parser/ParserRegistry.js",
+      "type": "file",
+      "name": "ParserRegistry.js",
+      "filePath": "parser/ParserRegistry.js",
+      "summary": "Maintains the extension-to-parser lookup used by the pipeline to select a parser for each discovered source file.",
+      "tags": [
+        "parser",
+        "registry",
+        "routing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:parser/ParserRegistry.js:ParserRegistry",
+      "type": "class",
+      "name": "ParserRegistry",
+      "filePath": "parser/ParserRegistry.js",
+      "summary": "Registry that stores parser instances by file extension and exposes lookup and introspection helpers.",
+      "tags": [
+        "parser",
+        "registry",
+        "extensions"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:parser/ParserRegistry.js:register",
+      "type": "function",
+      "name": "register",
+      "filePath": "parser/ParserRegistry.js",
+      "summary": "Registers a parser for every extension it advertises, allowing later overrides.",
+      "tags": [
+        "parser",
+        "registry",
+        "extensions"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:parser/ParserRegistry.js:getParserFor",
+      "type": "function",
+      "name": "getParserFor",
+      "filePath": "parser/ParserRegistry.js",
+      "summary": "Selects the parser instance associated with a file path's extension.",
+      "tags": [
+        "parser",
+        "lookup",
+        "extensions"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:parser/ParserRegistry.js:registeredExtensions",
+      "type": "function",
+      "name": "registeredExtensions",
+      "filePath": "parser/ParserRegistry.js",
+      "summary": "Returns the set of extensions currently handled by the registry.",
+      "tags": [
+        "parser",
+        "registry",
+        "introspection"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:parser/TreeSitterParser.js",
+      "type": "file",
+      "name": "TreeSitterParser.js",
+      "filePath": "parser/TreeSitterParser.js",
+      "summary": "Concrete JavaScript/JSX parser that uses tree-sitter to produce parse results for downstream traversal.",
+      "tags": [
+        "parser",
+        "tree-sitter",
+        "javascript"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:parser/TreeSitterParser.js:TreeSitterParser",
+      "type": "class",
+      "name": "TreeSitterParser",
+      "filePath": "parser/TreeSitterParser.js",
+      "summary": "IParser implementation backed by tree-sitter-javascript for .js and .jsx files.",
+      "tags": [
+        "parser",
+        "tree-sitter",
+        "javascript"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:parser/TreeSitterParser.js:getSupportedExtensions",
+      "type": "function",
+      "name": "getSupportedExtensions",
+      "filePath": "parser/TreeSitterParser.js",
+      "summary": "Advertises JavaScript and JSX extensions handled by this parser.",
+      "tags": [
+        "parser",
+        "extensions",
+        "javascript"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:parser/TreeSitterParser.js:parse",
+      "type": "function",
+      "name": "parse",
+      "filePath": "parser/TreeSitterParser.js",
+      "summary": "Reads source text from disk and parses it into a tree-sitter syntax tree packaged as a parse result.",
+      "tags": [
+        "parser",
+        "tree-sitter",
+        "ast"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:pipeline/AnalysisPipeline.js",
+      "type": "file",
+      "name": "AnalysisPipeline.js",
+      "filePath": "pipeline/AnalysisPipeline.js",
+      "summary": "Coordinates discovery, parser selection, AST walking, and fact writing for an end-to-end analysis run.",
+      "tags": [
+        "pipeline",
+        "orchestration",
+        "facts"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:pipeline/AnalysisPipeline.js:AnalysisPipeline",
+      "type": "class",
+      "name": "AnalysisPipeline",
+      "filePath": "pipeline/AnalysisPipeline.js",
+      "summary": "Dependency-injected orchestrator that processes discovered files, accumulates facts, and persists the final result.",
+      "tags": [
+        "pipeline",
+        "orchestration",
+        "dependency-injection"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:pipeline/AnalysisPipeline.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "pipeline/AnalysisPipeline.js",
+      "summary": "Executes the full pipeline, tracking parsed, skipped, and errored files before writing the collected facts.",
+      "tags": [
+        "pipeline",
+        "execution",
+        "orchestration"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:utils/FileDiscovery.js",
+      "type": "file",
+      "name": "FileDiscovery.js",
+      "filePath": "utils/FileDiscovery.js",
+      "summary": "Recursively walks a source tree and collects files whose extensions match the configured language set.",
+      "tags": [
+        "discovery",
+        "filesystem",
+        "source-files"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:utils/FileDiscovery.js:FileDiscovery",
+      "type": "class",
+      "name": "FileDiscovery",
+      "filePath": "utils/FileDiscovery.js",
+      "summary": "Filesystem traversal utility that skips hidden or noisy directories while gathering matching source files.",
+      "tags": [
+        "filesystem",
+        "discovery",
+        "recursion"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:utils/FileDiscovery.js:discover",
+      "type": "function",
+      "name": "discover",
+      "filePath": "utils/FileDiscovery.js",
+      "summary": "Public entry point that accumulates matching files under a root directory.",
+      "tags": [
+        "filesystem",
+        "discovery",
+        "entrypoint"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:utils/FileDiscovery.js:_walk",
+      "type": "function",
+      "name": "_walk",
+      "filePath": "utils/FileDiscovery.js",
+      "summary": "Recursive directory walker that filters unreadable, hidden, and excluded paths before collecting matches.",
+      "tags": [
+        "filesystem",
+        "recursion",
+        "traversal"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:walker/IASTWalker.js",
+      "type": "file",
+      "name": "IASTWalker.js",
+      "filePath": "walker/IASTWalker.js",
+      "summary": "Defines the AST traversal abstraction that turns parse results into structured file facts.",
+      "tags": [
+        "walker",
+        "ast",
+        "interface"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:walker/IASTWalker.js:IASTWalker",
+      "type": "class",
+      "name": "IASTWalker",
+      "filePath": "walker/IASTWalker.js",
+      "summary": "Abstract traversal contract for walkers that visit syntax trees and emit file-level facts.",
+      "tags": [
+        "walker",
+        "abstraction",
+        "traversal"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:walker/IASTWalker.js:walk",
+      "type": "function",
+      "name": "walk",
+      "filePath": "walker/IASTWalker.js",
+      "summary": "Abstract traversal method that accepts a parse result and returns extracted facts.",
+      "tags": [
+        "walker",
+        "traversal",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:walker/TreeSitterWalker.js",
+      "type": "file",
+      "name": "TreeSitterWalker.js",
+      "filePath": "walker/TreeSitterWalker.js",
+      "summary": "Implements depth-first tree-sitter traversal with a dispatch table that routes nodes to interested extractors.",
+      "tags": [
+        "walker",
+        "tree-sitter",
+        "extractors"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:walker/TreeSitterWalker.js:TreeSitterWalker",
+      "type": "class",
+      "name": "TreeSitterWalker",
+      "filePath": "walker/TreeSitterWalker.js",
+      "summary": "Concrete AST walker that builds an extractor dispatch map and accumulates facts during recursive traversal.",
+      "tags": [
+        "walker",
+        "dispatch",
+        "tree-sitter"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:walker/TreeSitterWalker.js:walk",
+      "type": "function",
+      "name": "walk",
+      "filePath": "walker/TreeSitterWalker.js",
+      "summary": "Initializes the file-facts container and starts traversal from the syntax tree root.",
+      "tags": [
+        "walker",
+        "facts",
+        "entrypoint"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:walker/TreeSitterWalker.js:_visit",
+      "type": "function",
+      "name": "_visit",
+      "filePath": "walker/TreeSitterWalker.js",
+      "summary": "Visits one node, dispatches to registered extractors, and recursively descends through all children.",
+      "tags": [
+        "walker",
+        "dispatch",
+        "recursion"
+      ],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "class:extractors/CallExtractor.js:CallExtractor",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:_fromCallExpression",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:_fromNewExpression",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:_fromJsxElement",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:_fromJsxSelfClosing",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:_jsxFact",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "class:extractors/ClassExtractor.js:ClassExtractor",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "function:extractors/ClassExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "function:extractors/ClassExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "function:extractors/ClassExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "function:extractors/ClassExtractor.js:resolveVariableName",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "class:extractors/ExportExtractor.js:ExportExtractor",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "function:extractors/ExportExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "function:extractors/ExportExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "function:extractors/ExportExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "function:extractors/ExportExtractor.js:stripQuotes",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "class:extractors/FunctionExtractor.js:FunctionExtractor",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:_fromDeclaration",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:_fromParentVariable",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:_fromMethodDef",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:resolveVariableName",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:resolveParentClassName",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:isComponent",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/IExtractor.js",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/IExtractor.js",
+      "target": "function:extractors/IExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/IExtractor.js",
+      "target": "function:extractors/IExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/IExtractor.js",
+      "target": "function:extractors/IExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "class:extractors/ImportExtractor.js:ImportExtractor",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "function:extractors/ImportExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "function:extractors/ImportExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "function:extractors/ImportExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "function:extractors/ImportExtractor.js:_collectSpecifiers",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "function:extractors/ImportExtractor.js:stripQuotes",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "file:extractors/IExtractor.js",
+      "type": "imports",
+      "weight": 0.98,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "file:extractors/IExtractor.js",
+      "type": "imports",
+      "weight": 0.98,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "file:extractors/IExtractor.js",
+      "type": "imports",
+      "weight": 0.98,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "file:extractors/IExtractor.js",
+      "type": "imports",
+      "weight": 0.98,
+      "direction": "forward"
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "file:extractors/IExtractor.js",
+      "type": "imports",
+      "weight": 0.98,
+      "direction": "forward"
+    },
+    {
+      "source": "class:extractors/CallExtractor.js:CallExtractor",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "inherits",
+      "weight": 0.97,
+      "direction": "forward"
+    },
+    {
+      "source": "class:extractors/ClassExtractor.js:ClassExtractor",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "inherits",
+      "weight": 0.97,
+      "direction": "forward"
+    },
+    {
+      "source": "class:extractors/ExportExtractor.js:ExportExtractor",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "inherits",
+      "weight": 0.97,
+      "direction": "forward"
+    },
+    {
+      "source": "class:extractors/FunctionExtractor.js:FunctionExtractor",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "inherits",
+      "weight": 0.97,
+      "direction": "forward"
+    },
+    {
+      "source": "class:extractors/ImportExtractor.js:ImportExtractor",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "inherits",
+      "weight": 0.97,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:extract",
+      "target": "function:extractors/CallExtractor.js:_fromCallExpression",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:extract",
+      "target": "function:extractors/CallExtractor.js:_fromNewExpression",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:extract",
+      "target": "function:extractors/CallExtractor.js:_fromJsxElement",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:extract",
+      "target": "function:extractors/CallExtractor.js:_fromJsxSelfClosing",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:_fromJsxElement",
+      "target": "function:extractors/CallExtractor.js:_jsxFact",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:_fromJsxSelfClosing",
+      "target": "function:extractors/CallExtractor.js:_jsxFact",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/ClassExtractor.js:extract",
+      "target": "function:extractors/ClassExtractor.js:resolveVariableName",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/ExportExtractor.js:extract",
+      "target": "function:extractors/ExportExtractor.js:stripQuotes",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:extract",
+      "target": "function:extractors/FunctionExtractor.js:_fromDeclaration",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:extract",
+      "target": "function:extractors/FunctionExtractor.js:_fromParentVariable",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:extract",
+      "target": "function:extractors/FunctionExtractor.js:_fromMethodDef",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:_fromDeclaration",
+      "target": "function:extractors/FunctionExtractor.js:isComponent",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:_fromParentVariable",
+      "target": "function:extractors/FunctionExtractor.js:resolveVariableName",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:_fromParentVariable",
+      "target": "function:extractors/FunctionExtractor.js:isComponent",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:_fromMethodDef",
+      "target": "function:extractors/FunctionExtractor.js:resolveParentClassName",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/ImportExtractor.js:extract",
+      "target": "function:extractors/ImportExtractor.js:stripQuotes",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "source": "function:extractors/ImportExtractor.js:extract",
+      "target": "function:extractors/ImportExtractor.js:_collectSpecifiers",
+      "type": "calls",
+      "weight": 0.93,
+      "direction": "forward"
+    },
+    {
+      "id": "imports:file:output/JsonFactWriter.js->file:output/IFactWriter.js",
+      "type": "imports",
+      "source": "file:output/JsonFactWriter.js",
+      "target": "file:output/IFactWriter.js",
+      "summary": "JsonFactWriter depends on the abstract IFactWriter contract.",
+      "direction": "forward"
+    },
+    {
+      "id": "imports:file:parser/TreeSitterParser.js->file:parser/IParser.js",
+      "type": "imports",
+      "source": "file:parser/TreeSitterParser.js",
+      "target": "file:parser/IParser.js",
+      "summary": "TreeSitterParser extends the parser abstraction defined in IParser.",
+      "direction": "forward"
+    },
+    {
+      "id": "imports:file:walker/TreeSitterWalker.js->file:walker/IASTWalker.js",
+      "type": "imports",
+      "source": "file:walker/TreeSitterWalker.js",
+      "target": "file:walker/IASTWalker.js",
+      "summary": "TreeSitterWalker imports the abstract AST walker contract.",
+      "direction": "forward"
+    },
+    {
+      "id": "imports:file:index.js->file:output/JsonFactWriter.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:output/JsonFactWriter.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline.",
+      "direction": "forward"
+    },
+    {
+      "id": "imports:file:index.js->file:parser/ParserRegistry.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:parser/ParserRegistry.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline.",
+      "direction": "forward"
+    },
+    {
+      "id": "imports:file:index.js->file:parser/TreeSitterParser.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:parser/TreeSitterParser.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline.",
+      "direction": "forward"
+    },
+    {
+      "id": "imports:file:index.js->file:pipeline/AnalysisPipeline.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:pipeline/AnalysisPipeline.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline.",
+      "direction": "forward"
+    },
+    {
+      "id": "imports:file:index.js->file:utils/FileDiscovery.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:utils/FileDiscovery.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline.",
+      "direction": "forward"
+    },
+    {
+      "id": "imports:file:index.js->file:walker/TreeSitterWalker.js",
+      "type": "imports",
+      "source": "file:index.js",
+      "target": "file:walker/TreeSitterWalker.js",
+      "summary": "The composition root imports this module to assemble the analysis pipeline.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:output/IFactWriter.js->class:output/IFactWriter.js:IFactWriter",
+      "type": "contains",
+      "source": "file:output/IFactWriter.js",
+      "target": "class:output/IFactWriter.js:IFactWriter",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:output/IFactWriter.js->function:output/IFactWriter.js:write",
+      "type": "contains",
+      "source": "file:output/IFactWriter.js",
+      "target": "function:output/IFactWriter.js:write",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:output/JsonFactWriter.js->class:output/JsonFactWriter.js:JsonFactWriter",
+      "type": "contains",
+      "source": "file:output/JsonFactWriter.js",
+      "target": "class:output/JsonFactWriter.js:JsonFactWriter",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:output/JsonFactWriter.js->function:output/JsonFactWriter.js:write",
+      "type": "contains",
+      "source": "file:output/JsonFactWriter.js",
+      "target": "function:output/JsonFactWriter.js:write",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:parser/IParser.js->class:parser/IParser.js:IParser",
+      "type": "contains",
+      "source": "file:parser/IParser.js",
+      "target": "class:parser/IParser.js:IParser",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:parser/IParser.js->function:parser/IParser.js:parse",
+      "type": "contains",
+      "source": "file:parser/IParser.js",
+      "target": "function:parser/IParser.js:parse",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:parser/IParser.js->function:parser/IParser.js:getSupportedExtensions",
+      "type": "contains",
+      "source": "file:parser/IParser.js",
+      "target": "function:parser/IParser.js:getSupportedExtensions",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:parser/ParserRegistry.js->class:parser/ParserRegistry.js:ParserRegistry",
+      "type": "contains",
+      "source": "file:parser/ParserRegistry.js",
+      "target": "class:parser/ParserRegistry.js:ParserRegistry",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:parser/ParserRegistry.js->function:parser/ParserRegistry.js:register",
+      "type": "contains",
+      "source": "file:parser/ParserRegistry.js",
+      "target": "function:parser/ParserRegistry.js:register",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:parser/ParserRegistry.js->function:parser/ParserRegistry.js:getParserFor",
+      "type": "contains",
+      "source": "file:parser/ParserRegistry.js",
+      "target": "function:parser/ParserRegistry.js:getParserFor",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:parser/ParserRegistry.js->function:parser/ParserRegistry.js:registeredExtensions",
+      "type": "contains",
+      "source": "file:parser/ParserRegistry.js",
+      "target": "function:parser/ParserRegistry.js:registeredExtensions",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:parser/TreeSitterParser.js->class:parser/TreeSitterParser.js:TreeSitterParser",
+      "type": "contains",
+      "source": "file:parser/TreeSitterParser.js",
+      "target": "class:parser/TreeSitterParser.js:TreeSitterParser",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:parser/TreeSitterParser.js->function:parser/TreeSitterParser.js:getSupportedExtensions",
+      "type": "contains",
+      "source": "file:parser/TreeSitterParser.js",
+      "target": "function:parser/TreeSitterParser.js:getSupportedExtensions",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:parser/TreeSitterParser.js->function:parser/TreeSitterParser.js:parse",
+      "type": "contains",
+      "source": "file:parser/TreeSitterParser.js",
+      "target": "function:parser/TreeSitterParser.js:parse",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:pipeline/AnalysisPipeline.js->class:pipeline/AnalysisPipeline.js:AnalysisPipeline",
+      "type": "contains",
+      "source": "file:pipeline/AnalysisPipeline.js",
+      "target": "class:pipeline/AnalysisPipeline.js:AnalysisPipeline",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:pipeline/AnalysisPipeline.js->function:pipeline/AnalysisPipeline.js:run",
+      "type": "contains",
+      "source": "file:pipeline/AnalysisPipeline.js",
+      "target": "function:pipeline/AnalysisPipeline.js:run",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:utils/FileDiscovery.js->class:utils/FileDiscovery.js:FileDiscovery",
+      "type": "contains",
+      "source": "file:utils/FileDiscovery.js",
+      "target": "class:utils/FileDiscovery.js:FileDiscovery",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:utils/FileDiscovery.js->function:utils/FileDiscovery.js:discover",
+      "type": "contains",
+      "source": "file:utils/FileDiscovery.js",
+      "target": "function:utils/FileDiscovery.js:discover",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:utils/FileDiscovery.js->function:utils/FileDiscovery.js:_walk",
+      "type": "contains",
+      "source": "file:utils/FileDiscovery.js",
+      "target": "function:utils/FileDiscovery.js:_walk",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:walker/IASTWalker.js->class:walker/IASTWalker.js:IASTWalker",
+      "type": "contains",
+      "source": "file:walker/IASTWalker.js",
+      "target": "class:walker/IASTWalker.js:IASTWalker",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:walker/IASTWalker.js->function:walker/IASTWalker.js:walk",
+      "type": "contains",
+      "source": "file:walker/IASTWalker.js",
+      "target": "function:walker/IASTWalker.js:walk",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:walker/TreeSitterWalker.js->class:walker/TreeSitterWalker.js:TreeSitterWalker",
+      "type": "contains",
+      "source": "file:walker/TreeSitterWalker.js",
+      "target": "class:walker/TreeSitterWalker.js:TreeSitterWalker",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:walker/TreeSitterWalker.js->function:walker/TreeSitterWalker.js:walk",
+      "type": "contains",
+      "source": "file:walker/TreeSitterWalker.js",
+      "target": "function:walker/TreeSitterWalker.js:walk",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "contains:file:walker/TreeSitterWalker.js->function:walker/TreeSitterWalker.js:_visit",
+      "type": "contains",
+      "source": "file:walker/TreeSitterWalker.js",
+      "target": "function:walker/TreeSitterWalker.js:_visit",
+      "summary": "This source file defines the contained symbol.",
+      "direction": "forward"
+    },
+    {
+      "id": "inherits:class:output/JsonFactWriter.js:JsonFactWriter->class:output/IFactWriter.js:IFactWriter",
+      "type": "inherits",
+      "source": "class:output/JsonFactWriter.js:JsonFactWriter",
+      "target": "class:output/IFactWriter.js:IFactWriter",
+      "summary": "JsonFactWriter extends the abstract fact-writer base class.",
+      "direction": "forward"
+    },
+    {
+      "id": "inherits:class:parser/TreeSitterParser.js:TreeSitterParser->class:parser/IParser.js:IParser",
+      "type": "inherits",
+      "source": "class:parser/TreeSitterParser.js:TreeSitterParser",
+      "target": "class:parser/IParser.js:IParser",
+      "summary": "TreeSitterParser extends the abstract parser contract.",
+      "direction": "forward"
+    },
+    {
+      "id": "inherits:class:walker/TreeSitterWalker.js:TreeSitterWalker->class:walker/IASTWalker.js:IASTWalker",
+      "type": "inherits",
+      "source": "class:walker/TreeSitterWalker.js:TreeSitterWalker",
+      "target": "class:walker/IASTWalker.js:IASTWalker",
+      "summary": "TreeSitterWalker extends the abstract AST walker contract.",
+      "direction": "forward"
+    },
+    {
+      "source": "file:index.js",
+      "target": "file:extractors/ImportExtractor.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7,
+      "recoveredFromImportMap": true
+    },
+    {
+      "source": "file:index.js",
+      "target": "file:extractors/ExportExtractor.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7,
+      "recoveredFromImportMap": true
+    },
+    {
+      "source": "file:index.js",
+      "target": "file:extractors/FunctionExtractor.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7,
+      "recoveredFromImportMap": true
+    },
+    {
+      "source": "file:index.js",
+      "target": "file:extractors/CallExtractor.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7,
+      "recoveredFromImportMap": true
+    },
+    {
+      "source": "file:index.js",
+      "target": "file:extractors/ClassExtractor.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7,
+      "recoveredFromImportMap": true
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:entry-and-orchestration",
+      "name": "Entry & Orchestration",
+      "description": "CLI entry point and pipeline coordinator that wire all components together for end-to-end analysis runs.",
+      "nodeIds": [
+        "file:index.js",
+        "file:pipeline/AnalysisPipeline.js",
+        "file:utils/FileDiscovery.js"
+      ]
+    },
+    {
+      "id": "layer:parsing",
+      "name": "Parsing",
+      "description": "Parser abstractions, parser selection, and tree-sitter-backed source parsing for JavaScript and JSX files.",
+      "nodeIds": [
+        "file:parser/IParser.js",
+        "file:parser/ParserRegistry.js",
+        "file:parser/TreeSitterParser.js"
+      ]
+    },
+    {
+      "id": "layer:ast-walking",
+      "name": "AST Walking",
+      "description": "AST traversal contracts and tree-sitter walking logic that dispatch parsed nodes to extractors.",
+      "nodeIds": [
+        "file:walker/IASTWalker.js",
+        "file:walker/TreeSitterWalker.js"
+      ]
+    },
+    {
+      "id": "layer:fact-extraction",
+      "name": "Fact Extraction",
+      "description": "Extractor contracts and concrete AST extractors that derive imports, exports, functions, calls, and classes as facts.",
+      "nodeIds": [
+        "file:extractors/CallExtractor.js",
+        "file:extractors/ClassExtractor.js",
+        "file:extractors/ExportExtractor.js",
+        "file:extractors/FunctionExtractor.js",
+        "file:extractors/IExtractor.js",
+        "file:extractors/ImportExtractor.js"
+      ]
+    },
+    {
+      "id": "layer:output",
+      "name": "Output",
+      "description": "Fact writer abstractions, JSON serialization, and representative generated fact output artifacts.",
+      "nodeIds": [
+        "file:output/IFactWriter.js",
+        "file:output/JsonFactWriter.js",
+        "file:output/micro-lap-facts.json"
+      ]
+    },
+    {
+      "id": "layer:configuration",
+      "name": "Configuration",
+      "description": "Project and analysis configuration files that define package metadata and ignore rules for repository and tooling behavior.",
+      "nodeIds": [
+        "config:.gitignore",
+        "config:package.json",
+        "config:.understand-anything/.understandignore"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Start with package metadata and analysis boundaries",
+      "description": "Begin in package.json to see that this stage is a Node 18 CLI built around tree-sitter and exposed through index.js. Then glance at .gitignore and .understandignore to understand which generated artifacts or noisy paths are intentionally kept out of version control and analysis.",
+      "nodeIds": [
+        "config:package.json",
+        "config:.gitignore",
+        "config:.understand-anything/.understandignore"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Read the composition root in index.js",
+      "description": "index.js is the dependency-injection root and the best mental starting point for the runtime architecture. It wires together discovery, parser registration, AST walking, extractors, and JSON output, then turns CLI arguments into a single pipeline run.",
+      "nodeIds": [
+        "file:index.js"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "Follow end-to-end orchestration and file discovery",
+      "description": "AnalysisPipeline.js shows the control flow for the whole stage: discover files, choose a parser, walk the parsed tree, and write accumulated facts. FileDiscovery.js explains the first filtering boundary by recursively finding only supported source files while skipping hidden folders and common build output.",
+      "nodeIds": [
+        "file:pipeline/AnalysisPipeline.js",
+        "file:utils/FileDiscovery.js"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "Understand how source files become parse results",
+      "description": "The parsing layer separates interface from implementation so the pipeline never hard-codes language details. Read IParser.js for the contract, ParserRegistry.js for extension-based parser selection, and TreeSitterParser.js for the concrete JavaScript/JSX parser that returns tree-sitter parse results.",
+      "nodeIds": [
+        "file:parser/IParser.js",
+        "file:parser/ParserRegistry.js",
+        "file:parser/TreeSitterParser.js"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "See how parsed trees are traversed and dispatched",
+      "description": "The walker layer turns one parse result into one file-level facts object. IASTWalker.js defines that contract, while TreeSitterWalker.js implements a depth-first traversal with a node-type dispatch table so only relevant extractors run for each syntax node.",
+      "nodeIds": [
+        "file:walker/IASTWalker.js",
+        "file:walker/TreeSitterWalker.js"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "Study the extractor model and fact categories",
+      "description": "IExtractor.js defines the extension point that keeps each fact category single-purpose and pluggable. The concrete extractors then map specific tree-sitter node types into normalized architectural facts for imports, exports, functions, calls and JSX usage, and classes.",
+      "nodeIds": [
+        "file:extractors/IExtractor.js",
+        "file:extractors/ImportExtractor.js",
+        "file:extractors/ExportExtractor.js",
+        "file:extractors/FunctionExtractor.js",
+        "file:extractors/CallExtractor.js",
+        "file:extractors/ClassExtractor.js"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "Finish at the output boundary and sample artifact",
+      "description": "The output layer shows how extracted facts leave the pipeline without coupling orchestration to one storage format. IFactWriter.js defines the persistence contract, JsonFactWriter.js implements JSON serialization, and micro-lap-facts.json gives you a concrete example of the final per-file schema emitted by this stage.",
+      "nodeIds": [
+        "file:output/IFactWriter.js",
+        "file:output/JsonFactWriter.js",
+        "file:output/micro-lap-facts.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "issues": [],
+  "warnings": [
+    "Assembled graph contains 107 edges; this differs from the merge report's 102-edge output and likely reflects recovered imports edges."
+  ],
+  "stats": {
+    "totalNodes": 84,
+    "totalEdges": 107,
+    "nodeTypes": {
+      "class": 15,
+      "config": 3,
+      "file": 17,
+      "function": 49
+    },
+    "edgeTypes": {
+      "calls": 17,
+      "contains": 63,
+      "imports": 19,
+      "inherits": 8
+    }
+  }
+}

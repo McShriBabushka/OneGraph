@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 20,
+  "totalBatches": 3,
+  "exportsByPath": {
+    "extractors/CallExtractor.js": [],
+    "extractors/ClassExtractor.js": [],
+    "extractors/ExportExtractor.js": [],
+    "extractors/FunctionExtractor.js": [],
+    "extractors/IExtractor.js": [],
+    "extractors/ImportExtractor.js": [],
+    "output/IFactWriter.js": [],
+    "output/JsonFactWriter.js": [],
+    "parser/IParser.js": [],
+    "parser/ParserRegistry.js": [],
+    "parser/TreeSitterParser.js": [],
+    "pipeline/AnalysisPipeline.js": [],
+    "utils/FileDiscovery.js": [],
+    "walker/IASTWalker.js": [],
+    "walker/TreeSitterWalker.js": []
+  },
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "extractors/CallExtractor.js",
+          "language": "javascript",
+          "sizeLines": 195,
+          "fileCategory": "code"
+        },
+        {
+          "path": "extractors/ClassExtractor.js",
+          "language": "javascript",
+          "sizeLines": 139,
+          "fileCategory": "code"
+        },
+        {
+          "path": "extractors/ExportExtractor.js",
+          "language": "javascript",
+          "sizeLines": 147,
+          "fileCategory": "code"
+        },
+        {
+          "path": "extractors/FunctionExtractor.js",
+          "language": "javascript",
+          "sizeLines": 202,
+          "fileCategory": "code"
+        },
+        {
+          "path": "extractors/IExtractor.js",
+          "language": "javascript",
+          "sizeLines": 73,
+          "fileCategory": "code"
+        },
+        {
+          "path": "extractors/ImportExtractor.js",
+          "language": "javascript",
+          "sizeLines": 152,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "extractors/CallExtractor.js": [
+          "extractors/IExtractor.js"
+        ],
+        "extractors/ClassExtractor.js": [
+          "extractors/IExtractor.js"
+        ],
+        "extractors/ExportExtractor.js": [
+          "extractors/IExtractor.js"
+        ],
+        "extractors/FunctionExtractor.js": [
+          "extractors/IExtractor.js"
+        ],
+        "extractors/IExtractor.js": [],
+        "extractors/ImportExtractor.js": [
+          "extractors/IExtractor.js"
+        ]
+      },
+      "neighborMap": {
+        "extractors/CallExtractor.js": [
+          {
+            "path": "index.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "extractors/ClassExtractor.js": [
+          {
+            "path": "index.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "extractors/ExportExtractor.js": [
+          {
+            "path": "index.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "extractors/FunctionExtractor.js": [
+          {
+            "path": "index.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "extractors/ImportExtractor.js": [
+          {
+            "path": "index.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": ".gitignore",
+          "language": "gitignore",
+          "sizeLines": 3,
+          "fileCategory": "config"
+        },
+        {
+          "path": "index.js",
+          "language": "javascript",
+          "sizeLines": 90,
+          "fileCategory": "script"
+        },
+        {
+          "path": "package.json",
+          "language": "json",
+          "sizeLines": 16,
+          "fileCategory": "config"
+        }
+      ],
+      "batchImportData": {
+        ".gitignore": [],
+        "index.js": [
+          "parser/TreeSitterParser.js",
+          "parser/ParserRegistry.js",
+          "walker/TreeSitterWalker.js",
+          "extractors/ImportExtractor.js",
+          "extractors/ExportExtractor.js",
+          "extractors/FunctionExtractor.js",
+          "extractors/CallExtractor.js",
+          "extractors/ClassExtractor.js",
+          "output/JsonFactWriter.js",
+          "utils/FileDiscovery.js",
+          "pipeline/AnalysisPipeline.js"
+        ],
+        "package.json": []
+      },
+      "neighborMap": {
+        "index.js": [
+          {
+            "path": "parser/TreeSitterParser.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "parser/ParserRegistry.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "walker/TreeSitterWalker.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "extractors/ImportExtractor.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "extractors/ExportExtractor.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "extractors/FunctionExtractor.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "extractors/CallExtractor.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "extractors/ClassExtractor.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "output/JsonFactWriter.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "utils/FileDiscovery.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "pipeline/AnalysisPipeline.js",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 3,
+      "files": [
+        {
+          "path": ".understand-anything/.understandignore",
+          "language": "gitignore",
+          "sizeLines": 31,
+          "fileCategory": "config"
+        },
+        {
+          "path": "output/IFactWriter.js",
+          "language": "javascript",
+          "sizeLines": 31,
+          "fileCategory": "code"
+        },
+        {
+          "path": "output/JsonFactWriter.js",
+          "language": "javascript",
+          "sizeLines": 51,
+          "fileCategory": "code"
+        },
+        {
+          "path": "output/micro-lap-facts.json",
+          "language": "json",
+          "sizeLines": 16541,
+          "fileCategory": "data"
+        },
+        {
+          "path": "parser/IParser.js",
+          "language": "javascript",
+          "sizeLines": 53,
+          "fileCategory": "code"
+        },
+        {
+          "path": "parser/ParserRegistry.js",
+          "language": "javascript",
+          "sizeLines": 61,
+          "fileCategory": "code"
+        },
+        {
+          "path": "parser/TreeSitterParser.js",
+          "language": "javascript",
+          "sizeLines": 60,
+          "fileCategory": "code"
+        },
+        {
+          "path": "pipeline/AnalysisPipeline.js",
+          "language": "javascript",
+          "sizeLines": 87,
+          "fileCategory": "code"
+        },
+        {
+          "path": "utils/FileDiscovery.js",
+          "language": "javascript",
+          "sizeLines": 74,
+          "fileCategory": "code"
+        },
+        {
+          "path": "walker/IASTWalker.js",
+          "language": "javascript",
+          "sizeLines": 49,
+          "fileCategory": "code"
+        },
+        {
+          "path": "walker/TreeSitterWalker.js",
+          "language": "javascript",
+          "sizeLines": 110,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        ".understand-anything/.understandignore": [],
+        "output/IFactWriter.js": [],
+        "output/JsonFactWriter.js": [
+          "output/IFactWriter.js"
+        ],
+        "output/micro-lap-facts.json": [],
+        "parser/IParser.js": [],
+        "parser/ParserRegistry.js": [],
+        "parser/TreeSitterParser.js": [
+          "parser/IParser.js"
+        ],
+        "pipeline/AnalysisPipeline.js": [],
+        "utils/FileDiscovery.js": [],
+        "walker/IASTWalker.js": [],
+        "walker/TreeSitterWalker.js": [
+          "walker/IASTWalker.js"
+        ]
+      },
+      "neighborMap": {
+        "output/JsonFactWriter.js": [
+          {
+            "path": "index.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "parser/ParserRegistry.js": [
+          {
+            "path": "index.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "parser/TreeSitterParser.js": [
+          {
+            "path": "index.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "pipeline/AnalysisPipeline.js": [
+          {
+            "path": "index.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "utils/FileDiscovery.js": [
+          {
+            "path": "index.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "walker/TreeSitterWalker.js": [
+          {
+            "path": "index.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ]
+      }
+    }
+  ]
+}

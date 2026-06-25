@@ -1,0 +1,989 @@
+{
+  "nodes": [
+    {
+      "id": "file:extractors/CallExtractor.js",
+      "type": "file",
+      "name": "CallExtractor.js",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Defines an AST extractor that normalizes function calls, constructor invocations, and JSX component usages into call facts.",
+      "tags": [
+        "extractor",
+        "ast",
+        "calls",
+        "jsx"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:extractors/ClassExtractor.js",
+      "type": "file",
+      "name": "ClassExtractor.js",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Defines an AST extractor that captures class declarations and expressions, including superclass and method metadata.",
+      "tags": [
+        "extractor",
+        "ast",
+        "classes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:extractors/ExportExtractor.js",
+      "type": "file",
+      "name": "ExportExtractor.js",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Defines an AST extractor that collects exported names and default or re-export metadata from export statements.",
+      "tags": [
+        "extractor",
+        "ast",
+        "exports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:extractors/FunctionExtractor.js",
+      "type": "file",
+      "name": "FunctionExtractor.js",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Defines an AST extractor that resolves named functions, methods, and React-style components across several JavaScript function forms.",
+      "tags": [
+        "extractor",
+        "ast",
+        "functions",
+        "react"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:extractors/IExtractor.js",
+      "type": "file",
+      "name": "IExtractor.js",
+      "filePath": "extractors/IExtractor.js",
+      "summary": "Defines the abstract extractor contract used by the walker for node-type registration, fact extraction, and fact storage keys.",
+      "tags": [
+        "extractor",
+        "contract",
+        "ast"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:extractors/ImportExtractor.js",
+      "type": "file",
+      "name": "ImportExtractor.js",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Defines an AST extractor that parses ES module import declarations into normalized source and specifier facts.",
+      "tags": [
+        "extractor",
+        "ast",
+        "imports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:extractors/CallExtractor.js:CallExtractor",
+      "type": "class",
+      "name": "CallExtractor",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Concrete extractor for call expressions, constructor calls, and JSX component references.",
+      "tags": [
+        "class",
+        "extractor",
+        "calls"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:extractors/ClassExtractor.js:ClassExtractor",
+      "type": "class",
+      "name": "ClassExtractor",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Concrete extractor for class declarations and class expressions with inheritance and method summaries.",
+      "tags": [
+        "class",
+        "extractor",
+        "classes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:extractors/ExportExtractor.js:ExportExtractor",
+      "type": "class",
+      "name": "ExportExtractor",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Concrete extractor for export statements and public API symbol discovery.",
+      "tags": [
+        "class",
+        "extractor",
+        "exports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:extractors/FunctionExtractor.js:FunctionExtractor",
+      "type": "class",
+      "name": "FunctionExtractor",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Concrete extractor for declarations, expressions, arrow functions, and class methods.",
+      "tags": [
+        "class",
+        "extractor",
+        "functions"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:extractors/IExtractor.js:IExtractor",
+      "type": "class",
+      "name": "IExtractor",
+      "filePath": "extractors/IExtractor.js",
+      "summary": "Abstract base contract that all fact extractors extend and implement.",
+      "tags": [
+        "class",
+        "contract",
+        "extractor"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:extractors/ImportExtractor.js:ImportExtractor",
+      "type": "class",
+      "name": "ImportExtractor",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Concrete extractor for ES module import declarations and imported binding specifiers.",
+      "tags": [
+        "class",
+        "extractor",
+        "imports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Returns the Tree-sitter node types that the call extractor handles.",
+      "tags": [
+        "function",
+        "method",
+        "registration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Returns the fact bucket key used to store extracted call facts.",
+      "tags": [
+        "function",
+        "method",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Dispatches each supported AST node to the appropriate call, constructor, or JSX extraction helper.",
+      "tags": [
+        "function",
+        "method",
+        "dispatch"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:_fromCallExpression",
+      "type": "function",
+      "name": "_fromCallExpression",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Converts a call expression into a normalized function, method, or expression call fact.",
+      "tags": [
+        "function",
+        "method",
+        "calls"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:_fromNewExpression",
+      "type": "function",
+      "name": "_fromNewExpression",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Converts a constructor invocation into a normalized constructor call fact.",
+      "tags": [
+        "function",
+        "method",
+        "calls"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:_fromJsxElement",
+      "type": "function",
+      "name": "_fromJsxElement",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Extracts a JSX component usage from a standard opening and closing JSX element.",
+      "tags": [
+        "function",
+        "method",
+        "jsx"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:_fromJsxSelfClosing",
+      "type": "function",
+      "name": "_fromJsxSelfClosing",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Extracts a JSX component usage from a self-closing JSX element.",
+      "tags": [
+        "function",
+        "method",
+        "jsx"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/CallExtractor.js:_jsxFact",
+      "type": "function",
+      "name": "_jsxFact",
+      "filePath": "extractors/CallExtractor.js",
+      "summary": "Builds a shared JSX component call fact and filters out lowercase intrinsic tags.",
+      "tags": [
+        "function",
+        "method",
+        "jsx"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/ClassExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Returns the Tree-sitter node types that the class extractor handles.",
+      "tags": [
+        "function",
+        "method",
+        "registration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ClassExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Returns the fact bucket key used to store extracted class facts.",
+      "tags": [
+        "function",
+        "method",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ClassExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Resolves class names, superclass references, and method metadata from class AST nodes.",
+      "tags": [
+        "function",
+        "method",
+        "classes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/ClassExtractor.js:resolveVariableName",
+      "type": "function",
+      "name": "resolveVariableName",
+      "filePath": "extractors/ClassExtractor.js",
+      "summary": "Resolves the variable binding name for an anonymous class expression assigned to a declarator.",
+      "tags": [
+        "function",
+        "helper",
+        "classes"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ExportExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Returns the Tree-sitter node types that the export extractor handles.",
+      "tags": [
+        "function",
+        "method",
+        "registration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ExportExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Returns the fact bucket key used to store extracted export facts.",
+      "tags": [
+        "function",
+        "method",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ExportExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Collects exported symbol names, default-export state, and re-export source metadata.",
+      "tags": [
+        "function",
+        "method",
+        "exports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/ExportExtractor.js:stripQuotes",
+      "type": "function",
+      "name": "stripQuotes",
+      "filePath": "extractors/ExportExtractor.js",
+      "summary": "Removes surrounding quote characters from a module source literal.",
+      "tags": [
+        "function",
+        "helper",
+        "strings"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Returns the Tree-sitter node types that the function extractor handles.",
+      "tags": [
+        "function",
+        "method",
+        "registration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Returns the fact bucket key used to store extracted function facts.",
+      "tags": [
+        "function",
+        "method",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Dispatches supported function and method nodes to the appropriate extraction strategy.",
+      "tags": [
+        "function",
+        "method",
+        "dispatch"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:_fromDeclaration",
+      "type": "function",
+      "name": "_fromDeclaration",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Builds a fact for a named function or generator declaration and marks likely React components.",
+      "tags": [
+        "function",
+        "method",
+        "functions"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:_fromParentVariable",
+      "type": "function",
+      "name": "_fromParentVariable",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Builds a fact for a function expression or arrow function using its parent variable binding.",
+      "tags": [
+        "function",
+        "method",
+        "functions"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:_fromMethodDef",
+      "type": "function",
+      "name": "_fromMethodDef",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Builds a fact for a class method and resolves its enclosing class name.",
+      "tags": [
+        "function",
+        "method",
+        "methods"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:resolveVariableName",
+      "type": "function",
+      "name": "resolveVariableName",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Finds the nearest variable declarator name for an assigned function expression or arrow function.",
+      "tags": [
+        "function",
+        "helper",
+        "functions"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:resolveParentClassName",
+      "type": "function",
+      "name": "resolveParentClassName",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Walks upward through parent nodes to resolve the enclosing class for a method definition.",
+      "tags": [
+        "function",
+        "helper",
+        "classes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/FunctionExtractor.js:isComponent",
+      "type": "function",
+      "name": "isComponent",
+      "filePath": "extractors/FunctionExtractor.js",
+      "summary": "Applies the uppercase-name heuristic used to classify likely React components.",
+      "tags": [
+        "function",
+        "helper",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/IExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/IExtractor.js",
+      "summary": "Abstract contract method for declaring which AST node types an extractor wants to receive.",
+      "tags": [
+        "function",
+        "method",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/IExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/IExtractor.js",
+      "summary": "Abstract contract method for converting a matching syntax node into a plain fact object.",
+      "tags": [
+        "function",
+        "method",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/IExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/IExtractor.js",
+      "summary": "Abstract contract method for naming the fact collection that stores an extractor's output.",
+      "tags": [
+        "function",
+        "method",
+        "contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ImportExtractor.js:getNodeTypes",
+      "type": "function",
+      "name": "getNodeTypes",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Returns the Tree-sitter node types that the import extractor handles.",
+      "tags": [
+        "function",
+        "method",
+        "registration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ImportExtractor.js:getFactKey",
+      "type": "function",
+      "name": "getFactKey",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Returns the fact bucket key used to store extracted import facts.",
+      "tags": [
+        "function",
+        "method",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:extractors/ImportExtractor.js:extract",
+      "type": "function",
+      "name": "extract",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Collects the imported module source and all declared import specifiers from an import statement.",
+      "tags": [
+        "function",
+        "method",
+        "imports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/ImportExtractor.js:_collectSpecifiers",
+      "type": "function",
+      "name": "_collectSpecifiers",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Normalizes default, named, and namespace import bindings from an import clause.",
+      "tags": [
+        "function",
+        "method",
+        "imports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:extractors/ImportExtractor.js:stripQuotes",
+      "type": "function",
+      "name": "stripQuotes",
+      "filePath": "extractors/ImportExtractor.js",
+      "summary": "Removes surrounding quote characters from an import source literal.",
+      "tags": [
+        "function",
+        "helper",
+        "strings"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "class:extractors/CallExtractor.js:CallExtractor",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:_fromCallExpression",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:_fromNewExpression",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:_fromJsxElement",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:_fromJsxSelfClosing",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "function:extractors/CallExtractor.js:_jsxFact",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "class:extractors/ClassExtractor.js:ClassExtractor",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "function:extractors/ClassExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "function:extractors/ClassExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "function:extractors/ClassExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "function:extractors/ClassExtractor.js:resolveVariableName",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "class:extractors/ExportExtractor.js:ExportExtractor",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "function:extractors/ExportExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "function:extractors/ExportExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "function:extractors/ExportExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "function:extractors/ExportExtractor.js:stripQuotes",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "class:extractors/FunctionExtractor.js:FunctionExtractor",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:_fromDeclaration",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:_fromParentVariable",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:_fromMethodDef",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:resolveVariableName",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:resolveParentClassName",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "function:extractors/FunctionExtractor.js:isComponent",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/IExtractor.js",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/IExtractor.js",
+      "target": "function:extractors/IExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/IExtractor.js",
+      "target": "function:extractors/IExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/IExtractor.js",
+      "target": "function:extractors/IExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "class:extractors/ImportExtractor.js:ImportExtractor",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "function:extractors/ImportExtractor.js:getNodeTypes",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "function:extractors/ImportExtractor.js:getFactKey",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "function:extractors/ImportExtractor.js:extract",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "function:extractors/ImportExtractor.js:_collectSpecifiers",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "function:extractors/ImportExtractor.js:stripQuotes",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:extractors/CallExtractor.js",
+      "target": "file:extractors/IExtractor.js",
+      "type": "imports",
+      "weight": 0.98
+    },
+    {
+      "source": "file:extractors/ClassExtractor.js",
+      "target": "file:extractors/IExtractor.js",
+      "type": "imports",
+      "weight": 0.98
+    },
+    {
+      "source": "file:extractors/ExportExtractor.js",
+      "target": "file:extractors/IExtractor.js",
+      "type": "imports",
+      "weight": 0.98
+    },
+    {
+      "source": "file:extractors/FunctionExtractor.js",
+      "target": "file:extractors/IExtractor.js",
+      "type": "imports",
+      "weight": 0.98
+    },
+    {
+      "source": "file:extractors/ImportExtractor.js",
+      "target": "file:extractors/IExtractor.js",
+      "type": "imports",
+      "weight": 0.98
+    },
+    {
+      "source": "class:extractors/CallExtractor.js:CallExtractor",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "inherits",
+      "weight": 0.97
+    },
+    {
+      "source": "class:extractors/ClassExtractor.js:ClassExtractor",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "inherits",
+      "weight": 0.97
+    },
+    {
+      "source": "class:extractors/ExportExtractor.js:ExportExtractor",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "inherits",
+      "weight": 0.97
+    },
+    {
+      "source": "class:extractors/FunctionExtractor.js:FunctionExtractor",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "inherits",
+      "weight": 0.97
+    },
+    {
+      "source": "class:extractors/ImportExtractor.js:ImportExtractor",
+      "target": "class:extractors/IExtractor.js:IExtractor",
+      "type": "inherits",
+      "weight": 0.97
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:extract",
+      "target": "function:extractors/CallExtractor.js:_fromCallExpression",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:extract",
+      "target": "function:extractors/CallExtractor.js:_fromNewExpression",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:extract",
+      "target": "function:extractors/CallExtractor.js:_fromJsxElement",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:extract",
+      "target": "function:extractors/CallExtractor.js:_fromJsxSelfClosing",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:_fromJsxElement",
+      "target": "function:extractors/CallExtractor.js:_jsxFact",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/CallExtractor.js:_fromJsxSelfClosing",
+      "target": "function:extractors/CallExtractor.js:_jsxFact",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/ClassExtractor.js:extract",
+      "target": "function:extractors/ClassExtractor.js:resolveVariableName",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/ExportExtractor.js:extract",
+      "target": "function:extractors/ExportExtractor.js:stripQuotes",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:extract",
+      "target": "function:extractors/FunctionExtractor.js:_fromDeclaration",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:extract",
+      "target": "function:extractors/FunctionExtractor.js:_fromParentVariable",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:extract",
+      "target": "function:extractors/FunctionExtractor.js:_fromMethodDef",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:_fromDeclaration",
+      "target": "function:extractors/FunctionExtractor.js:isComponent",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:_fromParentVariable",
+      "target": "function:extractors/FunctionExtractor.js:resolveVariableName",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:_fromParentVariable",
+      "target": "function:extractors/FunctionExtractor.js:isComponent",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/FunctionExtractor.js:_fromMethodDef",
+      "target": "function:extractors/FunctionExtractor.js:resolveParentClassName",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/ImportExtractor.js:extract",
+      "target": "function:extractors/ImportExtractor.js:stripQuotes",
+      "type": "calls",
+      "weight": 0.93
+    },
+    {
+      "source": "function:extractors/ImportExtractor.js:extract",
+      "target": "function:extractors/ImportExtractor.js:_collectSpecifiers",
+      "type": "calls",
+      "weight": 0.93
+    }
+  ]
+}
