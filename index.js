@@ -31,6 +31,7 @@ const ExportExtractor   = require('./extractors/ExportExtractor');
 const FunctionExtractor = require('./extractors/FunctionExtractor');
 const CallExtractor     = require('./extractors/CallExtractor');
 const ClassExtractor    = require('./extractors/ClassExtractor');
+const RouteExtractor    = require('./extractors/RouteExtractor');
 
 const JsonFactWriter    = require('./output/JsonFactWriter');
 
@@ -51,6 +52,7 @@ const extractors = [
   new FunctionExtractor(),
   new CallExtractor(),
   new ClassExtractor(),
+  new RouteExtractor(),
   // Future: new TypeAnnotationExtractor(), new HookExtractor(), ...
 ];
 
