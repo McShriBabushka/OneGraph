@@ -99,6 +99,7 @@ class FunctionExtractor extends IExtractor {
 
     return {
       line:             node.startPosition.row + 1,
+      endLine:          node.endPosition.row + 1,
       name,
       subtype:          node.type === 'generator_function_declaration' ? 'generator' : 'declaration',
       isReactComponent: isComponent(name),
@@ -116,6 +117,7 @@ class FunctionExtractor extends IExtractor {
 
     return {
       line:             node.startPosition.row + 1,
+      endLine:          node.endPosition.row + 1,
       name,
       subtype,
       isReactComponent: isComponent(name),
@@ -139,6 +141,7 @@ class FunctionExtractor extends IExtractor {
 
     return {
       line:             node.startPosition.row + 1,
+      endLine:          node.endPosition.row + 1,
       name,
       subtype:          'method',
       parentClass:      parentCls,
@@ -160,14 +163,30 @@ function resolveVariableName(node) {
   const parent = node.parent;
   if (!parent) return null;
 
+  // Direct: const Foo = () => {}
   if (parent.type === 'variable_declarator') {
     const nameNode = parent.childForFieldName('name') ||
                      parent.namedChildren.find(n => n.type === 'identifier');
     return nameNode?.text ?? null;
   }
 
-  // Handle patterns like: `export default () => {}` or `return () => {}`
-  // where parent is not a variable_declarator — skip these.
+  // Wrapped: const pickLead = catchAsync.bind(null, async (req, res) => {})
+  //   arrow_function  ← node
+  //     parent: arguments
+  //       parent: call_expression  (catchAsync.bind(...))
+  //         parent: variable_declarator  ← holds the name
+  if (parent.type === 'arguments') {
+    const callExpr = parent.parent;
+    if (callExpr?.type === 'call_expression') {
+      const declarator = callExpr.parent;
+      if (declarator?.type === 'variable_declarator') {
+        const nameNode = declarator.childForFieldName('name') ||
+                         declarator.namedChildren.find(n => n.type === 'identifier');
+        return nameNode?.text ?? null;
+      }
+    }
+  }
+
   return null;
 }
 

@@ -46,7 +46,21 @@ class TreeSitterParser extends IParser {
    */
   parse(filePath) {
     const sourceCode = fs.readFileSync(filePath, 'utf8');
-    const tree       = this._parser.parse(sourceCode);
+
+    // Use the callback form of parse() for robustness.
+    // tree-sitter 0.21 throws "Invalid argument" when parsing large files or
+    // source containing non-BMP Unicode (Indic text, emoji, etc.) via the
+    // simple string API.  The callback form streams UTF-8 Buffer chunks to the
+    // C layer, bypassing the problematic string conversion.
+    const buf  = Buffer.from(sourceCode, 'utf8');
+    const tree = this._parser.parse((startIndex) => {
+      if (startIndex >= buf.length) return null;
+      // Must return a STRING, not a Buffer — the native C layer only accepts
+      // strings from the callback. Returning a Buffer causes the C layer to
+      // treat it as null (end-of-input) and produce an empty tree.
+      // Chunking at 4096 bytes prevents internal buffer overflows on large files.
+      return buf.slice(startIndex, startIndex + 4096).toString('utf8');
+    });
 
     return {
       filePath,

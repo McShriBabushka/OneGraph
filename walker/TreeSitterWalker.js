@@ -66,6 +66,7 @@ class TreeSitterWalker extends IASTWalker {
       functions: [],
       calls:     [],
       classes:   [],
+      routes:    [],
     };
 
     this._visit(parseResult.tree.rootNode, parseResult, facts);

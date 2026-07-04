@@ -96,32 +96,62 @@ class CallExtractor extends IExtractor {
                        node.namedChildren[0];
     if (!calleeNode) return null;
 
+    // ── Plain function call: foo() ────────────────────────────────────────
     if (calleeNode.type === 'identifier') {
+      // require() is owned by ImportExtractor
+      if (calleeNode.text === 'require') return null;
+
       return {
         line:     node.startPosition.row + 1,
+        endLine:  node.endPosition.row + 1,
         callType: 'function',
         callee:   calleeNode.text,
         object:   null,
       };
     }
 
+    // ── Method or chained call: obj.method() ─────────────────────────────
     if (calleeNode.type === 'member_expression') {
       const objNode  = calleeNode.childForFieldName('object')   || calleeNode.namedChildren[0];
       const propNode = calleeNode.childForFieldName('property') || calleeNode.namedChildren[1];
+      const callee   = propNode?.text ?? null;
 
-      return {
-        line:     node.startPosition.row + 1,
-        callType: 'method',
-        callee:   propNode?.text ?? null,
-        object:   objNode?.text ?? null,
-      };
+      // If the object is a simple identifier, this is a plain method call.
+      if (objNode?.type === 'identifier') {
+        return {
+          line:     node.startPosition.row + 1,
+          endLine:  node.endPosition.row + 1,
+          callType: 'method',
+          callee,
+          object:   objNode.text,
+        };
+      }
+
+      // If the object is itself a call/new/member chain, resolve to root.
+      // Examples:
+      //   new AppError().setType().setName()  → root: AppError
+      //   Joi.string().custom(...)             → root: Joi
+      //   res.status(200).json(...)            → root: res
+      //   getCollection().find(...)            → root: getCollection
+      //   router.get(...).post(...)            → root: router
+      if (objNode) {
+        const chainRoot = resolveChainRoot(objNode);
+        return {
+          line:     node.startPosition.row + 1,
+          endLine:  node.endPosition.row + 1,
+          callType: 'chained',
+          callee,
+          object:   chainRoot,
+        };
+      }
     }
 
-    // Chained call or other callee shape — record the raw text (truncated).
+    // ── Fallback: any other callee shape ─────────────────────────────────
     return {
       line:     node.startPosition.row + 1,
+      endLine:  node.endPosition.row + 1,
       callType: 'expression',
-      callee:   calleeNode.text.slice(0, 120),
+      callee:   calleeNode.text.split('\n')[0].slice(0, 80),
       object:   null,
     };
   }
@@ -138,6 +168,7 @@ class CallExtractor extends IExtractor {
                      );
     return {
       line:     node.startPosition.row + 1,
+      endLine:  node.endPosition.row + 1,
       callType: 'constructor',
       callee:   ctorNode?.text ?? null,
       object:   null,
@@ -151,15 +182,11 @@ class CallExtractor extends IExtractor {
   _fromJsxElement(node) {
     const openingEl = node.namedChildren.find(n => n.type === 'jsx_opening_element');
     if (!openingEl) return null;
-    return this._jsxFact(openingEl, node.startPosition.row + 1);
+    return this._jsxFact(openingEl, node.startPosition.row + 1, node.endPosition.row + 1);
   }
 
-  /**
-   * jsx_self_closing_element — `<MyComponent />`.
-   * The component name is a direct named child of the element itself.
-   */
   _fromJsxSelfClosing(node) {
-    return this._jsxFact(node, node.startPosition.row + 1);
+    return this._jsxFact(node, node.startPosition.row + 1, node.endPosition.row + 1);
   }
 
   /**
@@ -169,7 +196,7 @@ class CallExtractor extends IExtractor {
    * Tree-sitter field `name` on jsx_opening_element / jsx_self_closing_element
    * is an identifier, member_expression, or jsx_namespace_name.
    */
-  _jsxFact(elementNode, line) {
+  _jsxFact(elementNode, line, endLine) {
     const nameNode = elementNode.childForFieldName('name') ||
                      elementNode.namedChildren.find(n =>
                        n.type === 'identifier' ||
@@ -179,12 +206,11 @@ class CallExtractor extends IExtractor {
     if (!nameNode) return null;
 
     const callee = nameNode.text;
-
-    // Skip HTML intrinsics — they start with a lowercase letter.
     if (/^[a-z]/.test(callee)) return null;
 
     return {
       line,
+      endLine,
       callType: 'jsx_component',
       callee,
       object:   null,
@@ -193,3 +219,75 @@ class CallExtractor extends IExtractor {
 }
 
 module.exports = CallExtractor;
+
+// ── module-level helpers ──────────────────────────────────────────────────────
+
+/**
+ * resolveChainRoot — Walk down a chained expression to find the root identifier.
+ *
+ * Given any of:
+ *   new AppError().setType().setName()   → "AppError"
+ *   Joi.string().custom(...)             → "Joi"
+ *   res.status(200).json(...)            → "res"
+ *   getCollection().find(...)            → "getCollection"
+ *   router.get(...).post(...)            → "router"
+ *   promise.then(...).catch(...)         → (root of promise)
+ *
+ * The algorithm: repeatedly unwrap the outermost wrapper node until we reach
+ * an identifier or hit a dead end.
+ *
+ * @param   {object}      node  Any SyntaxNode (the object side of a member_expression)
+ * @returns {string|null}
+ */
+function resolveChainRoot(node) {
+  let current = node;
+  let depth = 0; // guard against degenerate infinite loops
+
+  while (current && depth < 30) {
+    depth++;
+    switch (current.type) {
+      case 'identifier':
+        return current.text;
+
+      // obj.prop  →  keep unwrapping the object side
+      case 'member_expression': {
+        const obj = current.childForFieldName('object') || current.namedChildren[0];
+        current = obj;
+        break;
+      }
+
+      // fn()  →  unwrap the callee
+      case 'call_expression': {
+        const callee = current.childForFieldName('function') || current.namedChildren[0];
+        current = callee;
+        break;
+      }
+
+      // new Foo()  →  take the constructor
+      case 'new_expression': {
+        const ctor = current.childForFieldName('constructor') ||
+                     current.namedChildren.find(n =>
+                       n.type === 'identifier' || n.type === 'member_expression'
+                     );
+        current = ctor;
+        break;
+      }
+
+      // await expr  →  unwrap the awaited expression
+      case 'await_expression':
+        current = current.namedChildren[0];
+        break;
+
+      // parenthesized (...)  →  unwrap
+      case 'parenthesized_expression':
+        current = current.namedChildren[0];
+        break;
+
+      default:
+        // Cannot resolve further — return first line of text, truncated
+        return current.text?.split('\n')[0]?.slice(0, 60) ?? null;
+    }
+  }
+
+  return null;
+}

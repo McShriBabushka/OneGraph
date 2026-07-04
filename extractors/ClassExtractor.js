@@ -111,6 +111,7 @@ class ClassExtractor extends IExtractor {
 
     return {
       line:    node.startPosition.row + 1,
+      endLine: node.endPosition.row + 1,
       name,
       extends: extendsName,
       methods,

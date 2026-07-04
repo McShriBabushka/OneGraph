@@ -58,7 +58,9 @@ const IExtractor = require('./IExtractor');
 class ExportExtractor extends IExtractor {
   /** @returns {string[]} */
   getNodeTypes() {
-    return ['export_statement'];
+    // `export_statement`     — ESM:  export default Foo / export { foo }
+    // `expression_statement` — CJS:  module.exports = { ... } / module.exports = router
+    return ['export_statement', 'expression_statement'];
   }
 
   /** @returns {string} */
@@ -67,10 +69,94 @@ class ExportExtractor extends IExtractor {
   }
 
   /**
-   * @param   {object} node  export_statement SyntaxNode
-   * @returns {object}
+   * @param   {object} node  export_statement or expression_statement SyntaxNode
+   * @returns {object|null}
    */
   extract(node) {
+    if (node.type === 'export_statement') {
+      return this._fromESMExport(node);
+    }
+    if (node.type === 'expression_statement') {
+      return this._fromModuleExports(node);
+    }
+    return null;
+  }
+
+  /**
+   * CJS: module.exports = { foo, bar }  or  module.exports = router
+   *
+   * CST shape:
+   *   expression_statement
+   *     assignment_expression
+   *       member_expression  ← LHS: module.exports
+   *         identifier "module"
+   *         property_identifier "exports"
+   *       [object | identifier | call_expression]  ← RHS
+   *
+   * The node type of the RHS determines the export kind:
+   *   object      → shorthand_property_identifier entries are the exported names
+   *   identifier  → single named export (e.g. module.exports = router)
+   *   call_expression → HOC-wrapped default (e.g. module.exports = withAuth(App))
+   */
+  _fromModuleExports(node) {
+    const assignNode = node.namedChildren.find(c => c.type === 'assignment_expression');
+    if (!assignNode) return null;
+
+    // LHS must be `module.exports`
+    const lhs = assignNode.namedChildren[0];
+    if (!lhs || lhs.type !== 'member_expression') return null;
+    const obj  = lhs.namedChildren.find(n => n.type === 'identifier');
+    const prop = lhs.namedChildren.find(n => n.type === 'property_identifier');
+    if (obj?.text !== 'module' || prop?.text !== 'exports') return null;
+
+    const rhs   = assignNode.namedChildren[1];
+    if (!rhs) return null;
+
+    const names = [];
+    let   wrappedWith = null;
+
+    if (rhs.type === 'object') {
+      // module.exports = { foo, bar, baz }
+      for (const child of rhs.namedChildren) {
+        if (child.type === 'shorthand_property_identifier') {
+          names.push(child.text);
+        } else if (child.type === 'pair') {
+          // module.exports = { foo: fooFn } — use the key
+          const key = child.namedChildren[0];
+          if (key) names.push(key.text);
+        }
+      }
+    } else if (rhs.type === 'identifier') {
+      // module.exports = router
+      names.push(rhs.text);
+    } else if (rhs.type === 'call_expression') {
+      // module.exports = withAuth(App) or module.exports = connect()(App)
+      // Record the wrapper for graph metadata; try to extract the inner name.
+      const callee = rhs.childForFieldName('function') || rhs.namedChildren[0];
+      wrappedWith   = callee?.text ?? null;
+      // Last argument is usually the wrapped component
+      const args    = rhs.namedChildren.find(c => c.type === 'arguments');
+      const lastArg = args?.namedChildren[args.namedChildren.length - 1];
+      if (lastArg?.type === 'identifier') names.push(lastArg.text);
+    }
+
+    if (names.length === 0 && !wrappedWith) return null;
+
+    return {
+      line:        node.startPosition.row + 1,
+      endLine:     node.endPosition.row + 1,
+      kind:        'cjs',
+      isDefault:   true,
+      names,
+      source:      null,
+      wrappedWith, // non-null for HOC patterns
+    };
+  }
+
+  /**
+   * ESM export variants (unchanged logic, endLine added).
+   */
+  _fromESMExport(node) {
     // Detect `export default` by looking for an anonymous 'default' child.
     const isDefault = node.children.some(c => c.type === 'default');
 
@@ -133,6 +219,8 @@ class ExportExtractor extends IExtractor {
 
     return {
       line:      node.startPosition.row + 1,
+      endLine:   node.endPosition.row + 1,
+      kind:      'esm',
       isDefault,
       names,
       source,    // non-null for re-exports only

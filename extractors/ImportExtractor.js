@@ -56,9 +56,11 @@ const IExtractor = require('./IExtractor');
 class ImportExtractor extends IExtractor {
   /** @returns {string[]} */
   getNodeTypes() {
-    // `import_declaration` covers all ES6 import statement variants.
-    // `require` calls are handled by CallExtractor as call_expression nodes.
-    return ['import_declaration'];
+    // `import_statement`  — ESM:  import React from 'react'
+    // `call_expression`   — CJS:  const x = require('./module')
+    //                             const { x } = require('./module')
+    // Both are intercepted here and routed in extract() by node.type.
+    return ['import_statement', 'call_expression'];
   }
 
   /** @returns {string} */
@@ -67,21 +69,103 @@ class ImportExtractor extends IExtractor {
   }
 
   /**
-   * @param   {object} node  import_declaration SyntaxNode
-   * @returns {object}
+   * @param   {object} node  import_statement or call_expression SyntaxNode
+   * @returns {object|null}
    */
   extract(node) {
-    // The module path is always a `string` named child.
-    // node.text for a Tree-sitter string includes the quote chars, e.g. "'react'".
-    const sourceNode = node.namedChildren.find(c => c.type === 'string');
-    const source     = sourceNode ? stripQuotes(sourceNode.text) : null;
+    if (node.type === 'import_statement') {
+      return this._fromESMImport(node);
+    }
+    if (node.type === 'call_expression') {
+      return this._fromRequire(node);
+    }
+    return null;
+  }
 
-    // Walk the import_clause (if present) to collect all specifiers.
-    const clauseNode  = node.namedChildren.find(c => c.type === 'import_clause');
-    const specifiers  = clauseNode ? this._collectSpecifiers(clauseNode) : [];
+  /**
+   * ESM: import React, { useState } from 'react'
+   */
+  _fromESMImport(node) {
+    const sourceNode   = node.namedChildren.find(c => c.type === 'string');
+    const fragmentNode = sourceNode?.namedChildren.find(f => f.type === 'string_fragment');
+    const source       = fragmentNode?.text ?? (sourceNode ? stripQuotes(sourceNode.text) : null);
+
+    const clauseNode = node.namedChildren.find(c => c.type === 'import_clause');
+    const specifiers = clauseNode ? this._collectSpecifiers(clauseNode) : [];
 
     return {
-      line:       node.startPosition.row + 1,
+      line:    node.startPosition.row + 1,
+      endLine: node.endPosition.row + 1,
+      kind:    'esm',
+      source,
+      specifiers,
+    };
+  }
+
+  /**
+   * CJS: const foo = require('./module')
+   *      const { foo } = require('./module')
+   *
+   * CST shape:
+   *   lexical_declaration
+   *     variable_declarator
+   *       [identifier | object_pattern]  ← binding name(s)
+   *       call_expression
+   *         identifier "require"
+   *         arguments → string
+   *
+   * We only handle the case where:
+   *   1. The callee is an identifier with text === 'require'
+   *   2. The parent is a variable_declarator (top-level binding)
+   * All other call_expressions are ignored (returned as null).
+   */
+  _fromRequire(node) {
+    // Guard: callee must be bare `require` identifier
+    const calleeNode = node.childForFieldName('function') ||
+                       node.namedChildren[0];
+    if (!calleeNode || calleeNode.type !== 'identifier' || calleeNode.text !== 'require') {
+      return null;
+    }
+
+    // Guard: must be inside a variable_declarator
+    const declarator = node.parent;
+    if (!declarator || declarator.type !== 'variable_declarator') return null;
+
+    // Source path: first string argument to require()
+    const argsNode     = node.namedChildren.find(c => c.type === 'arguments');
+    const stringNode   = argsNode?.namedChildren.find(c => c.type === 'string');
+    const fragmentNode = stringNode?.namedChildren.find(c => c.type === 'string_fragment');
+    const source       = fragmentNode?.text ?? (stringNode ? stripQuotes(stringNode.text) : null);
+
+    // Binding name(s): identifier or object_pattern (destructured)
+    const nameNode   = declarator.childForFieldName('name') ||
+                       declarator.namedChildren.find(n =>
+                         n.type === 'identifier' || n.type === 'object_pattern'
+                       );
+    const specifiers = [];
+
+    if (nameNode?.type === 'identifier') {
+      specifiers.push({ name: nameNode.text, kind: 'default' });
+    } else if (nameNode?.type === 'object_pattern') {
+      // const { foo, bar } = require('...')
+      for (const prop of nameNode.namedChildren) {
+        if (prop.type === 'shorthand_property_identifier_pattern') {
+          specifiers.push({ name: prop.text, kind: 'named' });
+        } else if (prop.type === 'pair_pattern') {
+          // const { original: alias } = require('...')
+          const alias = prop.namedChildren[1];
+          if (alias) specifiers.push({ name: alias.text, kind: 'named' });
+        }
+      }
+    }
+
+    // Walk up to the lexical_declaration to get accurate start/end lines
+    const decl = declarator.parent;
+
+    return {
+      line:    (decl ?? node).startPosition.row + 1,
+      endLine: (decl ?? node).endPosition.row + 1,
+      kind:    'cjs',
       source,
       specifiers,
     };
